@@ -1,0 +1,6 @@
+nbproject/
+config.php
+SQL/
+SQL/login_attempts.sql
+SQL/SnortRulez.sql
+SQL/users.sql
