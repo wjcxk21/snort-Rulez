@@ -32,9 +32,7 @@ $noData = "No has rellenado el campo ";
 
 
 if ($_POST) {
-    //Abrir el archivo y escribir las reglas correspondientes
-    //De momento para ir depurando mostraremos echos de las reglas
-    
+    //Revisar campos del formulario    
     $arr_req = array('ruleType','protocol','originIP','originPort','direction','destinIP','destinPort'); //Hacer el array bidimensional para sacar el error en español
     $arr_opc = array('msgBox','referenceBox', 'classtypeBox','priorityBox','revBox', 'SIDBox');
     
@@ -76,16 +74,25 @@ if ($_POST) {
 	    if (!empty($_REQUEST[$noBox])) {
 		$options=$options.$noBox.":".$_REQUEST[$noBox]."; ";
 	    }else{
-		goto noOps;
+		//goto noOps;
 	    };
 	};
     };
     
     //Salidas cuando faltan campos [Modo depuración]
-    echo $rule."(".$options.")";
-    goto noRule;
-    noOps:;
-    echo $rule;
+    
+    $ruleZ = $rule."(".$options.")"."\r\n";
+    echo $ruleZ;
+    
+    //Escribir el archivo
+    $fp = fopen("custom.rules", "a");
+    fputs($fp, $ruleZ);
+    fclose($fp);
+
+
+
+
+
     noRule:;
     
 
