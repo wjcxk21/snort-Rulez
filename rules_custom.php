@@ -12,12 +12,31 @@ prioritario del proyecto.
  */
 $noData = "No has rellenado el campo ";
 
+//Sacar el SID mas alto de la BD y sumarle 1
+    include 'conexion.php';
+
+    $query = "SELECT max( `sid` )"
+	    .   "FROM `rules;";
+
+    if ($stmt = $conexion->prepare($query)) {
+
+	// ejecutamos la consulta
+	$stmt->execute();
+	$stmt->bind_result($maxSid);
+
+	// recuperamos la variable
+	$stmt->fetch();
+    }
+
+    $maxSid=$maxSid+1;
+
+
 if ($_POST) {
     //Abrir el archivo y escribir las reglas correspondientes
     //De momento para ir depurando mostraremos echos de las reglas
     
     $arr_req = array('ruleType','protocol','originIP','originPort','direction','destinIP','destinPort'); //Hacer el array bidimensional para sacar el error en español
-    $arr_opc = array('msgBox','referenceBox','SIDBox','classtypeBox','priorityBox','revBox');
+    $arr_opc = array('msgBox','referenceBox', 'classtypeBox','priorityBox','revBox', 'SIDBox');
     
     //Revisar que no hay ningun campo obligatorio vacio
     foreach ($arr_req as $r) {
@@ -127,16 +146,16 @@ if ($_POST) {
 		    </td>
 		</tr>
 		<tr>
+		    <td><input type="checkbox" style="display:none" name="SIDBox" value="SIDBox" checked=""></td>
+		    <td colspan="6">SID: <input type="text" name="SID" value=<?php echo "\"".$maxSid."\"" ?> readonly="readonly"><!--Con una consulta sacar el valor max de SID y sumarle 1--></td>
+		</tr>
+		<tr>
 		    <td><input type="checkbox" name="msgBox" value="msgBox"></td>
 		    <td colspan="6">Añadir mensaje: <input type="text" name="msg" value=""></td>
 		</tr>
 		<tr>
 		    <td><input type="checkbox" name="referenceBox" value="referenceBox"></td>
 		    <td colspan="6">Añadir referencia: <input type="text" name="reference" value=""></td>
-		</tr>
-		<tr>
-		    <td><input type="checkbox" name="SIDBox" value="SIDBox"></td>
-		    <td colspan="6">Añadir SID: <input type="text" name="SID" value="">[NO ESTA CLARO SI ESTO LO HARA AUTOMATICO]</td>
 		</tr>
 		<tr>
 		    <td><input type="checkbox" name="classtypeBox" value="classtypeBox"></td>
