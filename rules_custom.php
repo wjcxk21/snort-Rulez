@@ -13,6 +13,7 @@ prioritario del proyecto.
 $noData = "No has rellenado el campo ";
 
 //Sacar el SID mas alto de la BD y sumarle 1
+    //Conex con la BD
     include 'conexion.php';
 
     $query = "SELECT max( `sid` )"
@@ -73,26 +74,62 @@ if ($_POST) {
 	    $noBox= substr($op,0,-3);
 	    if (!empty($_REQUEST[$noBox])) {
 		$options=$options.$noBox.":".$_REQUEST[$noBox]."; ";
+		$queryOps=$queryOps.", ´".$noBox."´";
+		$queryInts=$queryInts.", ?";
+		$queryPost=$queryPost.",".'$_POST[\''.$noBox.'\']';
+		$queryS=$queryS."s";
 	    }else{
 		//goto noOps;
 	    };
 	};
     };
-    
-    //Salidas cuando faltan campos [Modo depuración]
-    
+        
+    //Echo para mostrar la regla [Modo depuración]
     $ruleZ = $rule."(".$options.")"."\r\n";
-    echo $ruleZ;
+    echo $ruleZ."<br>";
+    //echo $queryOps."<br>";
+    //echo $queryInts."<br>";
+    //echo $queryPost."<br>";
+    //echo $queryS."<br>";
     
-    //Escribir el archivo
+    //Guardar la regla en la BD
+	// INSERT query
+	$query = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`".$queryOps.") "
+		. "VALUES (?, ?, ?, ?, ?, ?, ?".$queryInts.")";
+	
+	echo $query,"<br>";
+
+	// prepare query for execution -> Aquí se comprueba la sintaxis
+	//  de la consulta y se reservan los recursos necesarios
+	//  para ejecutarla.
+	if ($stmt = $conexion->prepare($query)){
+	/*    echo "<div>registro preparado.</div>"; */
+	} else {
+	    die('Imposible preparar el registro.'.$conexion->error); 
+	}
+
+	// asociar los parámetros
+	$bindS="'sssssss'".$queryS;
+	
+	$stmt->bind_param("$bindS",$_POST['ruleType'],$_POST['protocol'],
+	$_POST['originIP'],$_POST['originPort'],$_POST['direction'],
+	$_POST['destinIP'],$_POST['originPort'],$_POST['originPort'],
+	$queryPost);
+
+	// ejecutar la query
+	if($stmt->execute()){
+	    echo "<div>Registro guardado.</div>";
+	} else {
+	    die('Imposible guardar el registro:'.$conexion->error);
+	};
+    //Aqui acaba la escritura en la BD
+    
+    /*/Escribir el archivo custom.rules
     $fp = fopen("custom.rules", "a");
     fputs($fp, $ruleZ);
-    fclose($fp);
+    fclose($fp);*/
 
-
-
-
-
+    //Salida cuando faltan campos
     noRule:;
     
 
