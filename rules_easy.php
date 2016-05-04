@@ -7,29 +7,87 @@ objetivo añadir de forma sencilla reglas muy básicas/muy usadas para Snort.
  * $_POST falso se ejecutara primero el PHP, si no hubiese datos y fuese
  * falso se ignoraria el PHP y mostraria el formulario.
  */
-$noRule="No has seleccionado ninguna regla.<br>";
-$noAddr="No has escrito la direccion de la red o del equipo en la ";
+$noRule="<div class="."\"alert alert-warning alert-dismissable text-center clear fade in\" id=\"formAlert\""
+			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
+			. "No ha seleccionado ninguna regla.<br>"
+			. "</div>";
+$noAddr="No ha escrito la direccion de la red o del equipo en la ";
 
     if($_POST){
 	//Abrir el archivo y escribir las reglas correspondientes
 	//De momento para ir depurando mostraremos echos de las reglas
 	if (($_POST['regla1']) || ($_POST['regla2']) || ($_POST['regla3']) || ($_POST['regla4']) || ($_POST['regla5'])) {
+	    
+	    // Conexión a la base de datos haciendo uso de conexion.php
+	    include 'conexion.php';
+	    
+	    //Sacar el SID mas alto de la BD y sumarle 1/2/3
+	    $query = "SELECT max( `sid` )"
+	    .   "FROM `easyRules;";
+
+	    if ($stmt = $conexion->prepare($query)) {
+		// ejecutamos la consulta
+		$stmt->execute();
+		$stmt->bind_result($maxSid);
+
+		// recuperamos la variable
+		$stmt->fetch();
+	    }
+	    $maxSplus1=$maxSid+1; //Para la regla1
+	    $maxSplus2=$maxSid+2; //Para la regla2
+	    $maxSplus3=$maxSid+3; //Para la regla3
+	    
 	    #Regla 1: de detección del ping
 	    if($_POST['regla1'] == 'regla1'){
 		if (empty($_POST['addr1']) || ($_POST['addr1'] == 'IP o Red')) {
-		    echo $noAddr."primera regla.<br>";
+		    echo "<div class="."\"alert alert-warning alert-dismissable text-center clear fade in\" id=\"formAlert\""
+			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
+			. $noAddr."primera regla.<br>"
+			. "</div>";
 		}else {
-		    echo "alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; sid:2130001; rev:1;)";
+		    $rule1="alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; ";
+		    $sid1="sid:".$maxSplus1.";)";
+		    echo "alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; sid:2130001;)<br>";
+		    echo $rule1.$sid1;
 		    echo "<p>----------------------------------</p>";
+		    
+		    
+		    // INSERT query
+			$query = "INSERT INTO easyRule (rule,sid) "
+				. "VALUES (?,?);";
+	
+		    echo $query,"<br>";
+
+		    // prepare query for execution -> Aquí se comprueba la sintaxis
+		    //  de la consulta y se reservan los recursos necesarios
+		    //  para ejecutarla.
+		    if ($stmt = $conexion->prepare($query)){
+		    /*    echo "<div>registro preparado.</div>"; */
+		    } else {
+			die('Imposible preparar el registro.'.$conexion->error); 
+		    }
+
+		    // asociar los parámetros
+		    $stmt->bind_param('ss',$rule,$sid);
+
+		    // ejecutar la query
+		    if($stmt->execute()){
+			echo "<div>Registro guardado.</div>";
+		    } else {
+			die('Imposible guardar el registro:'.$conexion->error);
+		    };
 		};
 	    };
 
 	    #Regla 2: de detección de SSH
 	    if($_POST['regla2'] == 'regla2'){
 		if (empty($_POST['addr2']) || ($_POST['addr2'] == 'IP o Red')) {
-		    echo $noAddr."segunda regla.<br>"; 
+		    echo "<div class="."\"alert alert-warning alert-dismissable text-center clear fade in\" id=\"formAlert\""
+			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
+			. $noAddr."segunda regla.<br>"
+			. "</div>";
 		}else {
-		    echo "alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; sid:2130002; rev:1;)";
+		    echo "alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; sid:2130002;)";
 		    echo "<p>----------------------------------</p>";
 		};
 	    };
@@ -37,22 +95,25 @@ $noAddr="No has escrito la direccion de la red o del equipo en la ";
 	    #Regla 3: Escaneo de puertos con NMAP
 	    if($_POST['regla3'] == 'regla3'){
 		if (empty($_POST['addr3']) || ($_POST['addr3'] == 'IP o Red')) {
-		    echo $noAddr."tercera regla.<br>"; 
+		    echo "<div class="."\"alert alert-warning alert-dismissable text-center clear fade in\" id=\"formAlert\""
+			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
+			. $noAddr."tercera regla.<br>"
+			. "</div>";
 		}else {
-		    echo "alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; sid:2130003; rev:1;)";
+		    echo "alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; sid:2130003;)";
 		    echo "<p>----------------------------------</p>";
 		};
 	    };
 		
 	    #Regla 4: Descarga de .torrent
 	    if(isset($_POST['regla4']) && $_POST['regla4'] == 'regla4') {
-		echo 'alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "Detectada descarga torrent"; content:"HTTP/"; content:".torrent"; flow:established,to_server; classtype:policy-violation; sid:2130004; rev:1;)';
+		echo 'alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "Detectada descarga torrent"; content:"HTTP/"; content:".torrent"; flow:established,to_server; classtype:policy-violation; rev:1; sid:20000001;)';
 		echo "<p>----------------------------------</p>";
 	    };
 
 	    #Regla 5: descarga de .mp3
 	    if(isset($_POST['regla5']) && $_POST['regla5'] == 'regla5') {
-		echo 'alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Detectada descarga MP3";flags: AP; content: ".mp3"; classtype:policy-violation; sid:2130005; rev:1;)';
+		echo 'alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Detectada descarga MP3";flags: AP; content: ".mp3"; classtype:policy-violation; rev:1; sid:20000002;)';
 		echo "<p>----------------------------------</p>";
 	    };
 	    

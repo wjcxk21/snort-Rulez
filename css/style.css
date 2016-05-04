@@ -3,10 +3,10 @@ body {
 margin:0;
 padding:0;
   background: white; /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(left top, #f49587, #5af095); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(bottom right, #f49587, #5af095); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(bottom right, #f49587, #5af095); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom right, #f49587, #5af095); /* Standard syntax */
+  background: -webkit-linear-gradient(left top, #87bcf4, #57a2f0); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, #87bcf4, #57a2f0); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #87bcf4, #57a2f0); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, #87bcf4, #57a2f0); /* Standard syntax */
   background-size: 100% 200%
 }
 
@@ -33,14 +33,14 @@ a:active {
 #wrapper {
 min-width: 910px;
 position:relative;
-background-color: #df8585;
+background-color: #e29f48;
 margin-top: 32px;
 }
 
 #header{
 padding: 3px 0px;
-background-color: #5fd760;
-color: #caf1c1;
+background-color: rgb(235, 135, 30);
+color: #FFFFFF;
 width: 100%;
 height: 140px;
 }
@@ -73,7 +73,7 @@ font-size: large;
 
 #footer{
 padding: 10px 5px 0px 5px;
-background-color: #5dd75e;
+background-color: rgb(235, 135, 30);
 color: #FFF;
 width: 100%;
 height:70px;
@@ -89,7 +89,7 @@ text-align: center;
     padding-top: 5px;
     padding-bottom: 5px;
    }
-   
+
 #formAlert{
  width: 75%;
  padding-left: 5px;
@@ -108,11 +108,11 @@ text-align: center;
 
 .melolbar{
     padding: 13px;
-    background-color: #47c248;
-    border-top: 2px solid hsl(120, 31%, 48%);
-    border-bottom: 2px solid #257425;
-    border-left: 2px solid hsl(120, 31%, 48%);
-    border-right: 2px solid #257425;
+    background-color: #4778c2;
+    border-top: 2px solid hsl(217, 30%, 47%);
+    border-bottom: 2px solid #254974;
+    border-left: 2px solid hsl(217, 30%, 47%);
+    border-right: 2px solid #254974;
     border-radius: 4px;
     position: relative;
     }
@@ -121,19 +121,13 @@ text-align: center;
     display: inline;
     padding: 6px 10px;
     border-radius: 5px;
-    background-color: #3ec23f;
-    border: 1px solid #257425;
-    border-bottom: 2px solid #257425;
-    border-right: 2px solid #257425;
+    background-color: #3e6fc2;
+    border: 1px solid #254974;
+    border-bottom: 2px solid #254974;
+    border-right: 2px solid #254974;
     text-transform: uppercase;
     font-weight: bold;
 }
 .melolbar a{
-    color: #1c581c;
+    color: #1c3858;
 }
-
-.melolbar #pipati {
-    position: absolute;
-    right:5px;
-    top: 4px;
-    }

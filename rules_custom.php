@@ -31,7 +31,6 @@ $noData = "No has rellenado el campo ";
 
     $maxSid=$maxSid+1;
 
-
 if ($_POST) {
     //Revisar campos del formulario    
     $arr_req = array('ruleType','protocol','originIP','originPort','direction','destinIP','destinPort'); //Hacer el array bidimensional para sacar el error en español
@@ -94,22 +93,24 @@ if ($_POST) {
     
     //Guardar la regla en la BD
 	// INSERT query
-	$query = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`".$queryOps.") "
-		. "VALUES (?, ?, ?, ?, ?, ?, ?".$queryInts.")";
+	//$query = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`".$queryOps.") "
+	//	. "VALUES (?, ?, ?, ?, ?, ?, ?".$queryInts.")";
+	$query2 = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`) "
+		. "VALUES (?, ?, ?, ?, ?, ?, ?);";
 	
-	echo $query,"<br>";
+	echo $query2,"<br>";
 
-	// prepare query for execution -> Aquí se comprueba la sintaxis
+	// prepare query for execution -> Aquí se comprueba la sintaxis 
 	//  de la consulta y se reservan los recursos necesarios
 	//  para ejecutarla.
-	if ($stmt = $conexion->prepare($query)){
+	if ($stmt = $conexion->prepare($query2)){
 	/*    echo "<div>registro preparado.</div>"; */
 	} else {
 	    die('Imposible preparar el registro.'.$conexion->error); 
 	}
 
 	// asociar los parámetros
-	$bindS="'sssssss'".$queryS;
+	$bindS="'sssssss".$queryS."'";
 	
 	$stmt->bind_param("$bindS",$_POST['ruleType'],$_POST['protocol'],
 	$_POST['originIP'],$_POST['originPort'],$_POST['direction'],
@@ -124,7 +125,7 @@ if ($_POST) {
 	};
     //Aqui acaba la escritura en la BD
     
-    /*/Escribir el archivo custom.rules
+    /*/Escribir el archivo custom.rules     COMENTADO HASTA QUE SE SOLUCIONE EL ACCESO A LA BD
     $fp = fopen("custom.rules", "a");
     fputs($fp, $ruleZ);
     fclose($fp);*/
