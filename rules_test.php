@@ -7,7 +7,10 @@ objetivo probar el correcto funcionamiento de Snort.
  * $_REQUEST falso se ejecutara primero el PHP, si no hubiese datos y fuese
  * falso se ignoraria el PHP y mostraria el formulario.
  */
-$noRule = "No has seleccionado ninguna regla.";
+$noRule="<div class="."\"alert alert-warning alert-dismissable text-center clear fade in\" id=\"formAlert\""
+			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
+			. "No ha seleccionado ninguna regla.<br>"
+			. "</div>";
 
 if ($_POST) {
     //Abrir el archivo y escribir las reglas correspondientes
@@ -15,17 +18,56 @@ if ($_POST) {
     #Regla 1: de detección del ping
     if (($_REQUEST['regla1'] || ($_REQUEST['regla2']) || $_REQUEST['regla3'])) {
 	if ($_REQUEST['regla1']) {
-	    echo "alert icmp any any -> any any (msg:\"Ping al IDS detection\";sid:20000013;rev:1;)<br>";
+	    //echo "alert icmp any any -> any any (msg:\"Ping al IDS detection\";sid:13000000;rev:1;)<br>";	    
+	    $values="('alert icmp any any -> any any (msg:\"Ping al IDS detection\";sid:13000000;rev:1;)')";
 	};
 	
 	if ($_REQUEST['regla2']) {
-	    echo "alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:20000015;rev:2;)<br>";
+	    //echo "alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)<br>";
+	    if (empty($values)){
+		$values="('alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)')";
+	    }else{
+		$values=$values.",('alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)')";
+	    }
 	};
 	
 	if ($_REQUEST['regla3']) {
-	    echo "alert tcp any any -> any 80 (msg:\"http detection(tcp)\";sid:20000016;rev:2;)<br>"
-	    .	 "alert tcp any any -> any 443 (msg:\"https detection(tcp)\";sid:20000017;rev:2;)<br>";
+	    //echo "alert tcp any any -> any 80 (msg:\"http detection(tcp)\";sid:13000002;rev:2;)<br>"
+	    //.	 "alert tcp any any -> any 443 (msg:\"https detection(tcp)\";sid:13000003;rev:2;)<br>";
+	    if (empty($values)){
+		$values="('alert tcp any any -> any 80 (msg:\"http detection(tcp)\";sid:13000002;rev:2;)'),"
+		      . "('alert tcp any any -> any 443 (msg:\"https detection(tcp)\";sid:13000003;rev:2;)')";
+	    }else{
+		$values=$values.",('alert tcp any any -> any 80 (msg:\"http detection(tcp)\";sid:13000002;rev:2;)'),"
+			       . "('alert tcp any any -> any 443 (msg:\"https detection(tcp)\";sid:13000003;rev:2;)')";
+	    }
+	    
 	};
+	
+	//INSERT con las reglas seleccionadas
+	    // Conexión a la base de datos haciendo uso de conexion.php
+	    include 'conexion.php';
+	    
+	    $query="INSERT INTO testRules (rule) VALUES $values";
+	    
+	    echo "-------------------------<br>";
+	    echo $query,"<br>";
+	    
+	    // prepare query for execution -> Aquí se comprueba la sintaxis
+	    //  de la consulta y se reservan los recursos necesarios
+	    //  para ejecutarla.
+	    if ($stmt = $conexion->prepare($query)){
+	    /*    echo "<div>registro preparado.</div>"; */
+	    } else {
+		die('Imposible preparar el registro.'.$conexion->error); 
+	    };
+	    
+	    // ejecutar la query
+	    if($stmt->execute()){
+		echo "<div>Registro guardado.</div>";
+	    } else {
+		die('Imposible guardar el registro:'.$conexion->error);
+	    };
 	
     } else {
 	echo $noRule;

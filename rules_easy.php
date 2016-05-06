@@ -45,37 +45,14 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 			. $noAddr."primera regla.<br>"
 			. "</div>";
 		}else {
-		    $rule1="alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; ";
-		    $sid1="sid:".$maxSplus1.";)";
-		    echo "alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; sid:2130001;)<br>";
-		    echo $rule1.$sid1;
+		    $rule1="'alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; '";
+		    $sid1="'".$maxSplus1."'";
+		    echo "alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; sid:".$maxSplus1.";)<br>";
+		    echo $rule1."sid:".$sid1.";)";
 		    echo "<p>----------------------------------</p>";
 		    
-		    
-		    // INSERT query
-			$query = "INSERT INTO easyRule (rule,sid) "
-				. "VALUES (?,?);";
-	
-		    echo $query,"<br>";
-
-		    // prepare query for execution -> Aquí se comprueba la sintaxis
-		    //  de la consulta y se reservan los recursos necesarios
-		    //  para ejecutarla.
-		    if ($stmt = $conexion->prepare($query)){
-		    /*    echo "<div>registro preparado.</div>"; */
-		    } else {
-			die('Imposible preparar el registro.'.$conexion->error); 
-		    }
-
-		    // asociar los parámetros
-		    $stmt->bind_param('ss',$rule,$sid);
-
-		    // ejecutar la query
-		    if($stmt->execute()){
-			echo "<div>Registro guardado.</div>";
-		    } else {
-			die('Imposible guardar el registro:'.$conexion->error);
-		    };
+		    //VALUE de la regla 1
+		    $values="($rule1,$sid1)";
 		};
 	    };
 
@@ -87,8 +64,18 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 			. $noAddr."segunda regla.<br>"
 			. "</div>";
 		}else {
-		    echo "alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; sid:2130002;)";
+		    
+		    $rule2="'alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; '";
+		    $sid2="'".$maxSplus2."'";
+		    echo "alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; sid:".$maxSplus2.";)<br>";		    echo $rule1."sid:".$sid1.";)";
 		    echo "<p>----------------------------------</p>";
+		    
+		    //VALUE de la regla 2
+		    if (empty($values)){
+			$values="($rule2,$sid2)";
+		    }else{
+			$values=$values.",($rule2,$sid2)";
+		    };
 		};
 	    };
 
@@ -100,8 +87,18 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 			. $noAddr."tercera regla.<br>"
 			. "</div>";
 		}else {
-		    echo "alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; sid:2130003;)";
+		    
+		    $rule3="'alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; '";
+		    $sid3="'".$maxSplus2."'";
+		    echo "alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; sid:".$maxSplus3.";)";		    echo $rule1."sid:".$sid1.";)";
 		    echo "<p>----------------------------------</p>";
+		    
+		    //VALUE de la regla 3
+		    if (empty($values)){
+			$values="($rule3,$sid3)";
+		    }else{
+			$values=$values.",($rule3,$sid3)";
+		    };
 		};
 	    };
 		
@@ -116,6 +113,33 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		echo 'alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Detectada descarga MP3";flags: AP; content: ".mp3"; classtype:policy-violation; rev:1; sid:20000002;)';
 		echo "<p>----------------------------------</p>";
 	    };
+	    
+	    //Introducir en la BD las reglas seleccionadas
+	    //  INSERT query
+		$query = "INSERT INTO `easyRules` (`rule`,`sid`) "
+			. "VALUES $values;";
+	
+		echo $query,"<br>";
+	
+
+		    // prepare query for execution -> Aquí se comprueba la sintaxis
+		    //  de la consulta y se reservan los recursos necesarios
+		    //  para ejecutarla.
+		    if ($stmt = $conexion->prepare($query)){
+		    /*    echo "<div>registro preparado.</div>"; */
+		    } else {
+			die('Imposible preparar el registro.'.$conexion->error); 
+		    };
+
+		    // asociar los parámetros
+		    //$stmt->bind_param('ss',$rule1,$sid1);
+
+		    // ejecutar la query
+		    if($stmt->execute()){
+			echo "<div>Registro guardado.</div>";
+		    } else {
+			die('Imposible guardar el registro:'.$conexion->error);
+		    };
 	    
 	}else{
 	    echo $noRule;
