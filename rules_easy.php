@@ -89,7 +89,7 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		}else {
 		    
 		    $rule3="'alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; '";
-		    $sid3="'".$maxSplus2."'";
+		    $sid3="'".$maxSplus3."'";
 		    echo "alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; sid:".$maxSplus3.";)";		    echo $rule1."sid:".$sid1.";)";
 		    echo "<p>----------------------------------</p>";
 		    
@@ -106,12 +106,32 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	    if(isset($_POST['regla4']) && $_POST['regla4'] == 'regla4') {
 		echo 'alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "Detectada descarga torrent"; content:"HTTP/"; content:".torrent"; flow:established,to_server; classtype:policy-violation; rev:1; sid:20000001;)';
 		echo "<p>----------------------------------</p>";
+		
+		$rule4='\'alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "Detectada descarga torrent"; content:"HTTP/"; content:".torrent"; flow:established,to_server; classtype:policy-violation; rev:1; \'';
+		$sid4="'20000001'";
+		
+		//VALUE de la regla 4
+		    if (empty($values)){
+			$values="($rule4,$sid4)";
+		    }else{
+			$values=$values.",($rule4,$sid4)";
+		    };
 	    };
 
 	    #Regla 5: descarga de .mp3
 	    if(isset($_POST['regla5']) && $_POST['regla5'] == 'regla5') {
 		echo 'alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Detectada descarga MP3";flags: AP; content: ".mp3"; classtype:policy-violation; rev:1; sid:20000002;)';
 		echo "<p>----------------------------------</p>";
+		
+		$rule5='\'alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Detectada descarga MP3";flags: AP; content: ".mp3"; classtype:policy-violation; rev:1; \'';
+		$sid5="'20000002'";
+		
+		//VALUE de la regla 5
+		    if (empty($values)){
+			$values="($rule5,$sid5)";
+		    }else{
+			$values=$values.",($rule5,$sid5)";
+		    };
 	    };
 	    
 	    //Introducir en la BD las reglas seleccionadas
