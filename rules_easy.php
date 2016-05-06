@@ -33,6 +33,8 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		// recuperamos la variable
 		$stmt->fetch();
 	    }
+	    
+	    //Variables para los SID
 	    $maxSplus1=$maxSid+1; //Para la regla1
 	    $maxSplus2=$maxSid+2; //Para la regla2
 	    $maxSplus3=$maxSid+3; //Para la regla3
