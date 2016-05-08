@@ -34,6 +34,10 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		$stmt->fetch();
 	    }
 	    
+	    //Si no hay añadida ninguna regla en easyRules:
+	    if (empty($maxSid)) {
+		$maxSid="20000100";
+	    };
 	    //Variables para los SID
 	    $maxSplus1=$maxSid+1; //Para la regla1
 	    $maxSplus2=$maxSid+2; //Para la regla2

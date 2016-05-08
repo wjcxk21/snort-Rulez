@@ -29,6 +29,11 @@ $noData = "No has rellenado el campo ";
 	$stmt->fetch();
     }
 
+    //Si no hay añadida ninguna regla en rules:
+    if (empty($maxSid)) {
+	$maxSid="40000000";
+    };
+    
     $maxSid=$maxSid+1;
 
 if ($_POST) {
