@@ -1,100 +1,99 @@
 html,
 body {
-margin:0;
-padding:0;
-  background: white; /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(left top, #87bcf4, #57a2f0); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(bottom right, #87bcf4, #57a2f0); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(bottom right, #87bcf4, #57a2f0); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom right, #87bcf4, #57a2f0); /* Standard syntax */
-  background-size: 100% 200%
+    margin:0;
+    padding:0;
+    border-radius: 25px;
+    background: white; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left top, #383535, #1c1b1b); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #383535, #1c1b1b); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #383535, #1c1b1b); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, #383535, #1c1b1b); /* Standard syntax */
+    background-size: 100% 200%
 }
 
 /* Colores enlaces */
-a:link {
-    color: red;
-}
-
+    a:link {
+        color: red;
+    }
 /* visited link */
-a:visited {
-    color: green;
-}
-
+    a:visited {
+        color: rgb(11, 119, 208);
+    }
 /* mouse over link */
-a:hover {
-    color: hotpink;
-}
-
+    a:hover {
+        color: #71a2f7;
+    }
 /* selected link */
-a:active {
-    color: blue;
-}
+    a:active {
+        color: #71a2f7;
+    }
 
 #wrapper {
-min-width: 910px;
-position:relative;
-background-color: #e29f48;
-margin-top: 32px;
+    min-width: 1000px;
+    position:relative;
+    background-color: #e29f48;
+    margin-top: 32px;
+    border-radius: 25px;
 }
 
 #header{
-padding: 3px 0px;
-background-color: rgb(235, 135, 30);
-color: #FFFFFF;
-width: 100%;
-height: 140px;
+    padding: 3px 0px;
+    background-color: rgb(235, 135, 30);
+    color: #FFFFFF;
+    width: 100%;
+    height: 140px;
+    border-radius: 25px 25px 0px 0px;
 }
 
 #logo{
-padding: 5px;
-float:left;
-width: 25%;
+    padding: 5px;
+    float:left;
+    width: 25%;
 }
-
 #logo img{
     height: 130px;
 }
 
 #title{
-float: left;
-font-size: 55px;
-margin: 0 auto;
-text-align: center;
-width: 70%;
-padding-top: 25px;
-text-shadow:5px 5px 10px black;
+    float: left;
+    font-size: 55px;
+    margin: 0 auto;
+    text-align: center;
+    width: 70%;
+    padding-top: 25px;
+    text-shadow:5px 5px 10px black;
 }
 
 #content {
-padding-bottom:70px; /* Height of the footer element */
-padding-left: 20px;
-font-size: large;
+    padding-bottom:70px; /* Height of the footer element */
+    padding-left: 20px;
+    font-size: large;
 }
 
 #footer{
-padding: 10px 5px 0px 5px;
-background-color: rgb(235, 135, 30);
-color: #FFF;
-width: 100%;
-height:70px;
-position:absolute;
-bottom:0;
-left:0;
-text-align: center;
+    padding: 10px 5px 0px 5px;
+    background-color: rgb(235, 135, 30);
+    color: #FFF;
+    width: 100%;
+    height:70px;
+    position:absolute;
+    bottom:0;
+    left:0;
+    text-align: center;
 }
 
 #login_fail{
-    width: 25%;
-    padding-left: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+        width: 25%;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
    }
 
 #formAlert{
- width: 75%;
- padding-left: 5px;
- padding-top: 1px;
- padding-bottom: 1px;
+     width: 75%;
+     padding-left: 5px;
+     padding-top: 1px;
+     padding-bottom: 1px;
 }
 
 .margXL{
@@ -121,7 +120,7 @@ text-align: center;
     display: inline;
     padding: 6px 10px;
     border-radius: 5px;
-    background-color: #3e6fc2;
+    background-color: #4b84e6;
     border: 1px solid #254974;
     border-bottom: 2px solid #254974;
     border-right: 2px solid #254974;
@@ -129,5 +128,14 @@ text-align: center;
     font-weight: bold;
 }
 .melolbar a{
-    color: #1c3858;
+    color: #fff;
 }
+
+.table13 {
+        background-color: transparent;
+        width: 100%;
+        max-width: 95%;
+        margin-bottom: 10px;
+        border-spacing: 0;
+        border-collapse: collapse;
+    }

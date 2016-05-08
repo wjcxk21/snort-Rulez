@@ -33,14 +33,14 @@ $noData = "No has rellenado el campo ";
     if (empty($maxSid)) {
 	$maxSid="40000000";
     };
-    
+
     $maxSid=$maxSid+1;
 
 if ($_POST) {
-    //Revisar campos del formulario    
+    //Revisar campos del formulario
     $arr_req = array('ruleType','protocol','originIP','originPort','direction','destinIP','destinPort'); //Hacer el array bidimensional para sacar el error en español
     $arr_opc = array('msgBox','referenceBox', 'classtypeBox','priorityBox','revBox', 'SIDBox');
-    
+
     //Revisar que no hay ningun campo obligatorio vacio
     foreach ($arr_req as $r) {
 	if (empty($_REQUEST[$r])) {
@@ -50,7 +50,7 @@ if ($_POST) {
 			. "</div>";
 	};
     };
-    
+
     //Revisar que si se han marcado los campos opcionales se han rellenado los input
     foreach ($arr_opc as $s) {
 	if ($_REQUEST[$s] == $s) {
@@ -63,8 +63,8 @@ if ($_POST) {
 	    };
 	};
     };
-    
-    //Mostrar la regla y las opciones con un echo 
+
+    //Mostrar la regla y las opciones con un echo
     foreach ($arr_req as $ec) {
 	if (!empty($_REQUEST[$ec])) {
 	    $rule=$rule.$_REQUEST[$ec]." ";
@@ -72,7 +72,7 @@ if ($_POST) {
 	    goto noRule;
 	};
     };
-    
+
     foreach ($arr_opc as $op) {
 	if ($_REQUEST[$op] == $op) {
 	    $noBox= substr($op,0,-3);
@@ -87,7 +87,7 @@ if ($_POST) {
 	    };
 	};
     };
-        
+
     //Echo para mostrar la regla [Modo depuración]
     $ruleZ = $rule."(".$options.")"."\r\n";
     echo $ruleZ."<br>";
@@ -95,28 +95,28 @@ if ($_POST) {
     //echo $queryInts."<br>";
     //echo $queryPost."<br>";
     //echo $queryS."<br>";
-    
+
     //Guardar la regla en la BD
 	// INSERT query
 	//$query = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`".$queryOps.") "
 	//	. "VALUES (?, ?, ?, ?, ?, ?, ?".$queryInts.")";
 	$query2 = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`) "
 		. "VALUES (?, ?, ?, ?, ?, ?, ?);";
-	
+
 	echo $query2,"<br>";
 
-	// prepare query for execution -> Aquí se comprueba la sintaxis 
+	// prepare query for execution -> Aquí se comprueba la sintaxis
 	//  de la consulta y se reservan los recursos necesarios
 	//  para ejecutarla.
 	if ($stmt = $conexion->prepare($query2)){
 	/*    echo "<div>registro preparado.</div>"; */
 	} else {
-	    die('Imposible preparar el registro.'.$conexion->error); 
+	    die('Imposible preparar el registro.'.$conexion->error);
 	}
 
 	// asociar los parámetros
 	$bindS="'sssssss".$queryS."'";
-	
+
 	$stmt->bind_param("$bindS",$_POST['ruleType'],$_POST['protocol'],
 	$_POST['originIP'],$_POST['originPort'],$_POST['direction'],
 	$_POST['destinIP'],$_POST['originPort'],$_POST['originPort'],
@@ -129,7 +129,7 @@ if ($_POST) {
 	    die('Imposible guardar el registro:'.$conexion->error);
 	};
     //Aqui acaba la escritura en la BD
-    
+
     /*/Escribir el archivo custom.rules     COMENTADO HASTA QUE SE SOLUCIONE EL ACCESO A LA BD
     $fp = fopen("custom.rules", "a");
     fputs($fp, $ruleZ);
@@ -137,7 +137,7 @@ if ($_POST) {
 
     //Salida cuando faltan campos
     noRule:;
-    
+
 
 }
 ?>
@@ -145,10 +145,10 @@ if ($_POST) {
 <div>
     <h2>Reglas personalizadas</h2>
     <p>Aqui puedes añadir las reglas personalizadas que quieras con la ayuda de este formulario:</p>
-    
+
     <div>
 	<form action="index.php?action=rules_custom" method='post'>
-	    <table class="table table-bordered table-condensed">
+	    <table class="table13 table-bordered table-condensed ">
 		<tr>
 		    <td>Tipo</td>		<!-- Añadir que sobre cada campo con un hover te explique brevemente que es -->
 		    <td>Protocolo</td>
@@ -175,11 +175,11 @@ if ($_POST) {
 			<option value="IP">IP</option>
 		      </select>
 		    </td>
-		    <td>
-		      <input type="text" name="originIP" value="">
+		    <td >
+		      <input type="text" name="originIP" maxlength="18" size="15" value="">
 		    </td>
-		    <td>
-		      <input type="text" name="originPort" value="">
+		    <td >
+		      <input type="text" name="originPort" maxlength="18" size="15" value="">
 		    </td>
 		    <td>
 		      <select name="direction">
@@ -188,11 +188,11 @@ if ($_POST) {
 			<option value="<>"><></option>
 		      </select>
 		    </td>
-		    <td>
-		      <input type="text" name="destinIP" value="">
+		    <td >
+		      <input type="text" name="destinIP" maxlength="18" size="15" value="">
 		    </td>
-		    <td>
-		      <input type="text" name="destinPort" value="">
+		    <td >
+		      <input type="text" name="destinPort" maxlength="18" size="15" value="">
 		    </td>
 		</tr>
 		<tr>
@@ -217,9 +217,9 @@ if ($_POST) {
 		</tr>
 		<tr>
 		    <td><input type="checkbox" name="revBox" value="revBox"></td>
-		    <td colspan="6">Añadir nº de rev: <input type="text" name="rev" value=""></td>
+		    <td colspan="6">Añadir nº de rev: <input type="text" name="rev" maxlength="18" value=""></td>
 		</tr>
-	    </table> 
+	    </table>
 	    <input type="submit" name="save" value="Añadir" />
 	</form>
     </div>
@@ -242,4 +242,3 @@ if ($_POST) {
 	</textarea>
     </div>
 </div>
-

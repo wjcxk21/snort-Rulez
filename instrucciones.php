@@ -9,8 +9,8 @@ and open the template in the editor.
     <div>
 	<p>Antes de usar esta aplicación debe hacer estos ajustes en la configuración de Snort.</p>
 	<ul>
-	    <li>Añada a balbalbalba</li>
-	    <li>adsfasdfasd</li>
+	    <li>Añada una explicacion sobre la app</li>
+	    <li>y su funcionamiento.</li>
 	</ul>
     </div>
 </div>
