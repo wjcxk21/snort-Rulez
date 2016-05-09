@@ -25,9 +25,9 @@ if ($_POST) {
 	if ($_REQUEST['regla2']) {
 	    //echo "alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)<br>";
 	    if (empty($values)){
-		$values="('alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)')";
+		$values="('alert tcp any any -> any 22 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)')";
 	    }else{
-		$values=$values.",('alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)')";
+		$values=$values.",('alert tcp any any -> any 22 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)')";
 	    }
 	};
 	
@@ -72,6 +72,26 @@ if ($_POST) {
     } else {
 	echo $noRule;
     };
+    
+    //Sacar todas las reglas añadidas a la tabla testRules para añadirlas al .rules
+/*    $sql = "SELECT * FROM `testRules`";
+    $result = $conexion->query($sql);
+
+    if ($result->num_rows > 0) {
+	// output data of each row
+	while($row = $result->fetch_assoc()) {
+	    echo $row['0']."<br>";
+	};
+    };    
+    $conexion->close();*/
+    
+    //Escribir la reglas en test.rules --> Esto deberia ser a partir de la consulta de arriba
+    // de momento coje directamente la regla que se añade a la bd en ese momento
+    //Cuando lo haga desde la BD, habra que poner el modo de escritura que sobreescribe por completo
+    $inText = substr($values,2,-2)."\r\n";
+    $fp = fopen("test.rules", "a");
+    fputs($fp, $inText);
+    fclose($fp);
 
 }
 ?>
