@@ -55,9 +55,10 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		}else {
 		    $rule1="'alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; '";
 		    $sid1="'".$maxSplus1."'";
-		    echo "alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; sid:".$maxSplus1.";)<br>";
-		    echo $rule1."sid:".$sid1.";)";
-		    echo "<p>----------------------------------</p>";
+		    //'echo' para depuracion
+		    //echo "alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; sid:".$maxSplus1.";)<br>";
+		    //echo $rule1."sid:".$sid1.";)";
+		    //echo "<p>----------------------------------</p>";
 		    
 		    //VALUE de la regla 1
 		    $values="($rule1,$sid1)";
@@ -75,8 +76,9 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		    
 		    $rule2="'alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; '";
 		    $sid2="'".$maxSplus2."'";
-		    echo "alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; sid:".$maxSplus2.";)<br>";		    echo $rule1."sid:".$sid1.";)";
-		    echo "<p>----------------------------------</p>";
+		    //'echo' para depuracion
+		    //echo "alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; sid:".$maxSplus2.";)<br>";
+		    //echo "<p>----------------------------------</p>";
 		    
 		    //VALUE de la regla 2
 		    if (empty($values)){
@@ -98,8 +100,9 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		    
 		    $rule3="'alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; '";
 		    $sid3="'".$maxSplus3."'";
-		    echo "alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; sid:".$maxSplus3.";)";		    echo $rule1."sid:".$sid1.";)";
-		    echo "<p>----------------------------------</p>";
+		    //'echo' para depuracion
+		    //echo "alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; sid:".$maxSplus3.";)";
+		    //echo "<p>----------------------------------</p>";
 		    
 		    //VALUE de la regla 3
 		    if (empty($values)){
@@ -112,8 +115,9 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		
 	    #Regla 4: Descarga de .torrent
 	    if(isset($_POST['regla4']) && $_POST['regla4'] == 'regla4') {
-		echo 'alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "Detectada descarga torrent"; content:"HTTP/"; content:".torrent"; flow:established,to_server; classtype:policy-violation; rev:1; sid:20000001;)';
-		echo "<p>----------------------------------</p>";
+		//'echo' para depuracion
+		//echo 'alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "Detectada descarga torrent"; content:"HTTP/"; content:".torrent"; flow:established,to_server; classtype:policy-violation; rev:1; sid:20000001;)';
+		//echo "<p>----------------------------------</p>";
 		
 		$rule4='\'alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "Detectada descarga torrent"; content:"HTTP/"; content:".torrent"; flow:established,to_server; classtype:policy-violation; rev:1; \'';
 		$sid4="'20000001'";
@@ -128,8 +132,9 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 
 	    #Regla 5: descarga de .mp3
 	    if(isset($_POST['regla5']) && $_POST['regla5'] == 'regla5') {
-		echo 'alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Detectada descarga MP3";flags: AP; content: ".mp3"; classtype:policy-violation; rev:1; sid:20000002;)';
-		echo "<p>----------------------------------</p>";
+		//'echo' para depuracion
+		//echo 'alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Detectada descarga MP3";flags: AP; content: ".mp3"; classtype:policy-violation; rev:1; sid:20000002;)';
+		//echo "<p>----------------------------------</p>";
 		
 		$rule5='\'alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Detectada descarga MP3";flags: AP; content: ".mp3"; classtype:policy-violation; rev:1; \'';
 		$sid5="'20000002'";
@@ -147,31 +152,51 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		$query = "REPLACE INTO `easyRules` (`rule`,`sid`) "
 			. "VALUES $values;";
 	
-		echo $query,"<br>";
-	
+	    //'echo' para depuracion
+	    //echo $query,"<br>";
 
-		    // prepare query for execution -> Aquí se comprueba la sintaxis
-		    //  de la consulta y se reservan los recursos necesarios
-		    //  para ejecutarla.
-		    if ($stmt = $conexion->prepare($query)){
-		    /*    echo "<div>registro preparado.</div>"; */
-		    } else {
-			die('Imposible preparar el registro.'.$conexion->error); 
-		    };
 
-		    // asociar los parámetros
-		    //$stmt->bind_param('ss',$rule1,$sid1);
+	    // prepare query for execution -> Aquí se comprueba la sintaxis
+	    //  de la consulta y se reservan los recursos necesarios
+	    //  para ejecutarla.
+		if ($stmt = $conexion->prepare($query)){
+		/*    echo "<div>registro preparado.</div>"; */
+		} else {
+		    die('Imposible preparar el registro.'.$conexion->error); 
+		};
 
-		    // ejecutar la query
-		    if($stmt->execute()){
-			echo "<div>Registro guardado.</div>";
-		    } else {
-			die('Imposible guardar el registro:'.$conexion->error);
-		    };
+	    // asociar los parámetros
+	    //$stmt->bind_param('ss',$rule1,$sid1);
+
+	    // ejecutar la query
+		if($stmt->execute()){
+		    echo "<div>Registro guardado.</div>";
+		} else {
+		    die('Imposible guardar el registro:'.$conexion->error);
+		};
 	    
 	}else{
 	    echo $noRule;
 	};
+	
+	//Sacar todas las reglas añadidas a la tabla testRules para añadirlas al .rules
+	$sql = "SELECT * FROM `easyRules`";
+	$result = $conexion->query($sql);
+
+	if ($result->num_rows > 0) {
+	    // output data of each row
+	    while($row = $result->fetch_assoc()) {
+		$inText=$inText.$row['rule']."sid:".$row['sid'].";)"."\r\n ";
+		//'echo' para depuracion
+		//echo $row['rule']."\r\n"."<br>";
+	    };
+	};    
+	$conexion->close();
+
+	//Escribir la reglas en easy.rules
+	$fp = fopen("easy.rules", "w");
+	fputs($fp, $inText);
+	fclose($fp);
     };
 ?>
 <div>
