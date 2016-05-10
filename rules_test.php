@@ -78,7 +78,7 @@ if ($_POST) {
     };
     
     //Sacar todas las reglas añadidas a la tabla testRules para añadirlas al .rules
-    $sql = "SELECT * FROM `testRules`";
+    $sql = "SELECT * FROM `testRules` GROUP BY 2";
     $result = $conexion->query($sql);
 
     if ($result->num_rows > 0) {
