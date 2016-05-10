@@ -144,7 +144,7 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	    
 	    //Introducir en la BD las reglas seleccionadas
 	    //  INSERT query
-		$query = "INSERT INTO `easyRules` (`rule`,`sid`) "
+		$query = "REPLACE INTO `easyRules` (`rule`,`sid`) "
 			. "VALUES $values;";
 	
 		echo $query,"<br>";
