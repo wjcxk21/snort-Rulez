@@ -50,8 +50,9 @@ if ($_POST) {
 	    
 	    $query="INSERT INTO testRules (rule) VALUES $values";
 	    
-	    echo "-------------------------<br>";
-	    echo $query,"<br>";
+	    //'echo' para depuracion
+	    //echo "-------------------------<br>";
+	    //echo $query,"<br>";
 	    
 	    // prepare query for execution -> Aquí se comprueba la sintaxis
 	    //  de la consulta y se reservan los recursos necesarios
@@ -84,16 +85,14 @@ if ($_POST) {
 	// output data of each row
 	while($row = $result->fetch_assoc()) {
 	    $inText=$inText.$row['rule']."\r\n ";
-	    echo $row['rule']."\r\n"."<br>";
+	    //'echo' para depuracion
+	    //echo $row['rule']."\r\n"."<br>";
 	};
     };    
     $conexion->close();
     
-    //Escribir la reglas en test.rules --> Esto deberia ser a partir de la consulta de arriba
-    // de momento coje directamente la regla que se añade a la bd en ese momento
-    //Cuando lo haga desde la BD, habra que poner el modo de escritura que sobreescribe por completo
-    //$inText = substr($values,2,-2)."\r\n";
-    $fp = fopen("test.rules", "a");
+    //Escribir la reglas en test.rules
+    $fp = fopen("test.rules", "w");
     fputs($fp, $inText);
     fclose($fp);
 
@@ -126,7 +125,6 @@ if ($_POST) {
 	<h4>Reglas añadidas actualmente a 'test.rules'</h4>
 	<!-- Leer el archivo 'test.rules' -->
 	<textarea cols="100" rows="25" wrap="hard" readonly="yes">
-	    Aqui irá el contentido de test rules:
 	    <?php
 		$fp = fopen("test.rules", "r");
 
@@ -134,7 +132,6 @@ if ($_POST) {
 		    $linea = fgets($fp);
 		    echo $linea ;
 		}
-
 		fclose($fp);
 	    ?>
 	</textarea>
