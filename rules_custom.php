@@ -33,7 +33,8 @@ $noData = "No has rellenado el campo ";
     if (empty($maxSid)) {
 	$maxSid="40000000";
     };
-
+    //Cerramos la conexión
+    $stmt->close(); 
     $maxSid=$maxSid+1;
 
 if ($_POST) {
@@ -100,8 +101,9 @@ if ($_POST) {
 	// INSERT query
 	//$query = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`".$queryOps.") "
 	//	. "VALUES (?, ?, ?, ?, ?, ?, ?".$queryInts.")";
-	$query2 = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`) "
-		. "VALUES (?, ?, ?, ?, ?, ?, ?);";
+	$query2 = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`, `SID`) "
+		. "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $query2 = "select * from rules";
 
 	echo $query2,"<br>";
 
@@ -111,16 +113,16 @@ if ($_POST) {
 	if ($stmt = $conexion->prepare($query2)){
 	/*    echo "<div>registro preparado.</div>"; */
 	} else {
-	    die('Imposible preparar el registro.'.$conexion->error);
+	    die('Imposible preparar el registro.'.$stmt->error);
 	}
 
 	// asociar los parámetros
-	$bindS="'sssssss".$queryS."'";
+	$bindS="ssssssss";//.$queryS;
 
-	$stmt->bind_param("$bindS",$_POST['ruleType'],$_POST['protocol'],
+	$stmt->bind_param($bindS,$_POST['ruleType'],$_POST['protocol'],
 	$_POST['originIP'],$_POST['originPort'],$_POST['direction'],
-	$_POST['destinIP'],$_POST['originPort'],$_POST['originPort'],
-	$queryPost);
+	$_POST['destinIP'],$_POST['originPort'],$_POST['originPort']);//,
+	//$queryPost);
 
 	// ejecutar la query
 	if($stmt->execute()){

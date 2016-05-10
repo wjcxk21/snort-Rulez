@@ -38,6 +38,8 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	    if (empty($maxSid)) {
 		$maxSid="20000100";
 	    };
+	    //Cerramos la conexión
+	    $stmt->close(); 
 	    //Variables para los SID
 	    $maxSplus1=$maxSid+1; //Para la regla1
 	    $maxSplus2=$maxSid+2; //Para la regla2
