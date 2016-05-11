@@ -39,15 +39,24 @@ $noData = "No has rellenado el campo ";
 
 if ($_POST) {
     //Revisar campos del formulario
-    $arr_req = array('ruleType','protocol','originIP','originPort','direction','destinIP','destinPort'); //Hacer el array bidimensional para sacar el error en español
     $arr_opc = array('msgBox','referenceBox', 'classtypeBox','priorityBox','revBox','SIDBox');
+    $arr_req = array(
+		    array('ruleType','Tipo'),
+		    array('protocol','Protocolo'),
+		    array('originIP','IP Origen'),
+		    array('originPort','Puerto Origen'),
+		    array('direction','Dirección'),
+		    array('destinIP',' 	IP Destino'),
+		    array('destinPort','Puerto Destino')
+		); 
+
 
     //Revisar que no hay ningun campo obligatorio vacio
     foreach ($arr_req as $r) {
-	if (empty($_REQUEST[$r])) {
+	if (empty($_REQUEST[$r[0]])) {
 	    echo "<div class="."\"alert alert-warning  alert-dismissable text-center clear fade in\" id=\"formAlert\""
 			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
-			. "No ha rellenado el campo '".$r."' , revise los datos.<br>"
+			. "No ha rellenado el campo '".$r[1]."' , revise los datos.<br>"
 			. "</div>";
 	};
     };
