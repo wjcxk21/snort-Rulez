@@ -40,7 +40,7 @@ $noData = "No has rellenado el campo ";
 if ($_POST) {
     //Revisar campos del formulario
     $arr_req = array('ruleType','protocol','originIP','originPort','direction','destinIP','destinPort'); //Hacer el array bidimensional para sacar el error en español
-    $arr_opc = array('SIDBox','msgBox','referenceBox', 'classtypeBox','priorityBox','revBox');
+    $arr_opc = array('msgBox','referenceBox', 'classtypeBox','priorityBox','revBox','SIDBox');
 
     //Revisar que no hay ningun campo obligatorio vacio
     foreach ($arr_req as $r) {
@@ -80,18 +80,6 @@ if ($_POST) {
 	    if (!empty($_REQUEST[$noBox])) {
 		$options=$options.$noBox.":".$_REQUEST[$noBox]."; ";
 		$queryOps=$queryOps.", `".$noBox."`";
-		$queryInts=$queryInts.", ?";
-		$queryS=$queryS."s";
-
-		if (empty($queryPost)){
-			$queryPost=" ".$_POST[$noBox]."";
-		    }else{
-			$queryPost=$queryPost.", ".$_POST[$noBox]."";
-		    };
-		
-		
-	    }else{
-		//goto noOps;
 	    };
 	};
     };
@@ -99,15 +87,11 @@ if ($_POST) {
     //Echo para mostrar la regla [Modo depuración]
     $ruleZ = $rule."(".$options.")"."\r\n";
     echo $ruleZ."<br>";
-    //echo $queryOps."<br>";
-    //echo $queryInts."<br>";
-    //echo $queryPost."<br>";
-    //echo $queryS."<br>";
 
     //Guardar la regla en la BD
 	// INSERT query
-	$query2 = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`".$queryOps.") "
-		. "VALUES (?, ?, ?, ?, ?, ?, ?".$queryInts.")";
+	$query2 = "INSERT INTO customRules (`rule`,`sid`) "
+		. "VALUES (?, ?)";
     
 	//$query2="select * from rules";
 
@@ -117,24 +101,13 @@ if ($_POST) {
 	//  de la consulta y se reservan los recursos necesarios
 	//  para ejecutarla.
 	if ($stmt = $conexion->prepare($query2)){
-	/*    echo "<div>registro preparado.</div>"; */
+	//    echo "<div>registro preparado.</div>"; 
 	} else {
 	    die('Imposible preparar el registro.'.$stmt->error);
 	}
 
 	// asociar los parámetros
-	$bindS="sssssss".$queryS; // <-- Esto funciona
-	echo "-------<br>".$bindS."-----<br>";
-	echo "-------<br>querypost: ".$queryPost." -----<br>"; // <-- El problema debe estar aqui
-	
-	echo "-------<br>SIDpost: ".$_POST['SID']." -----<br>";
-	echo "==================<br>";
-	echo $_POST['ruleType'].$_POST['protocol'].$_POST['originIP'].$_POST['originPort'].$_POST['direction'].$_POST['destinIP'].$_POST['originPort'].$queryPost;
-	echo "==================<br>";
-	
-	$stmt->bind_param($bindS,$_POST['ruleType'],$_POST['protocol'],
-	$_POST['originIP'],$_POST['originPort'],$_POST['direction'],
-	$_POST['destinIP'],$_POST['originPort'],$queryPost);
+	$stmt->bind_param('si',$ruleZ,$_POST['SID']);
 
 	// ejecutar la query
 	if($stmt->execute()){
@@ -142,7 +115,7 @@ if ($_POST) {
 	} else {
 	    die('Imposible guardar el registro:'.$conexion->error);
 	};
-    //Aqui acaba la escritura en la BD
+    //Aqui acaba la escritura en la BD				    
 
     /*/Escribir el archivo custom.rules     COMENTADO HASTA QUE SE SOLUCIONE EL ACCESO A LA BD
     $fp = fopen("custom.rules", "a");
