@@ -79,10 +79,17 @@ if ($_POST) {
 	    $noBox= substr($op,0,-3);
 	    if (!empty($_REQUEST[$noBox])) {
 		$options=$options.$noBox.":".$_REQUEST[$noBox]."; ";
-		$queryOps=$queryOps.", ´".$noBox."´";
+		$queryOps=$queryOps.", `".$noBox."`";
 		$queryInts=$queryInts.", ?";
-		$queryPost=$queryPost.",".'$_POST[\''.$noBox.'\']';
 		$queryS=$queryS."s";
+		$queryPost="";
+		if (empty($queryPost)){
+			$queryPost=" ".$_POST[$noBox];
+		    }else{
+			$queryPost=$queryPost.",".$_POST[$noBox];
+		    };
+		
+		
 	    }else{
 		//goto noOps;
 	    };
@@ -99,11 +106,10 @@ if ($_POST) {
 
     //Guardar la regla en la BD
 	// INSERT query
-	//$query = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`".$queryOps.") "
-	//	. "VALUES (?, ?, ?, ?, ?, ?, ?".$queryInts.")";
-	$query2 = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`, `SID`) "
-		. "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $query2 = "select * from rules";
+	$query2 = "INSERT INTO rules (`ruleType`,`protocol`,`originIP`,`originPort`,`direction`,`destinIP`,`destinPort`".$queryOps.") "
+		. "VALUES (?, ?, ?, ?, ?, ?, ?".$queryInts.")";
+    
+	//$query2="select * from rules";
 
 	echo $query2,"<br>";
 
@@ -117,12 +123,15 @@ if ($_POST) {
 	}
 
 	// asociar los parámetros
-	$bindS="ssssssss";//.$queryS;
+	$bindS="sssssss".$queryS; // <-- Esto funciona
+	echo "-------<br>".$bindS."-----<br>";
+	echo "-------<br>querypost: ".$queryPost." -----<br>"; // <-- El problema debe estar aqui
+	
+	echo "-------<br>SIDpost: ".$_POST['SID']." -----<br>";
 
 	$stmt->bind_param($bindS,$_POST['ruleType'],$_POST['protocol'],
 	$_POST['originIP'],$_POST['originPort'],$_POST['direction'],
-	$_POST['destinIP'],$_POST['originPort'],$_POST['originPort']);//,
-	//$queryPost);
+	$_POST['destinIP'],$_POST['originPort'],$queryPost);
 
 	// ejecutar la query
 	if($stmt->execute()){
