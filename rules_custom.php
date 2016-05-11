@@ -17,7 +17,7 @@ $noData = "No has rellenado el campo ";
     include 'conexion.php';
 
     $query = "SELECT max( `sid` )"
-	    .   "FROM `rules;";
+	    .   "FROM `customRules;";
 
     if ($stmt = $conexion->prepare($query)) {
 
@@ -79,14 +79,14 @@ if ($_POST) {
 	    $noBox= substr($op,0,-3);
 	    if (!empty($_REQUEST[$noBox])) {
 		$options=$options.$noBox.":".$_REQUEST[$noBox]."; ";
-		$queryOps=$queryOps.", `".$noBox."`";
 	    };
 	};
     };
 
     //Echo para mostrar la regla [Modo depuración]
     $ruleZ = $rule."(".$options.")"."\r\n";
-    echo $ruleZ."<br>";
+    //'echo' para depuracion
+    //echo $ruleZ."<br>";
 
     //Guardar la regla en la BD
 	// INSERT query
@@ -95,7 +95,8 @@ if ($_POST) {
     
 	//$query2="select * from rules";
 
-	echo $query2,"<br>";
+	//'echo' para depuracion
+	//echo $query2,"<br>";
 
 	// prepare query for execution -> Aquí se comprueba la sintaxis
 	//  de la consulta y se reservan los recursos necesarios
@@ -115,12 +116,31 @@ if ($_POST) {
 	} else {
 	    die('Imposible guardar el registro:'.$conexion->error);
 	};
-    //Aqui acaba la escritura en la BD				    
+	//Cerramos la conexión	
+	$stmt->close();
+	//Aqui acaba la escritura en la BD
+					    
+	//Sacar todas las reglas añadidas a la tabla customRules para añadirlas al .rules
+	$sql = "SELECT * FROM `customRules`";
+	$result = $conexion->query($sql);
 
-    /*/Escribir el archivo custom.rules     COMENTADO HASTA QUE SE SOLUCIONE EL ACCESO A LA BD
-    $fp = fopen("custom.rules", "a");
-    fputs($fp, $ruleZ);
-    fclose($fp);*/
+	if ($result->num_rows > 0) {
+	    // output data of each row
+	    while($row = $result->fetch_assoc()) {
+		$inText=$inText.$row['rule'];
+		//'echo' para depuracion
+		//echo $row['rule']."\r\n"."<br>";
+	    };
+	};    
+	$conexion->close();
+
+	//Escribir la reglas en custom.rules
+	$fp = fopen("custom.rules", "w");
+	fputs($fp, $inText);
+	fclose($fp);
+	
+	//Para poder seguir añadiendo reglas sin necesidad de recargar la pagina
+	$maxSid=$maxSid+1;
 
     //Salida cuando faltan campos
     noRule:;
