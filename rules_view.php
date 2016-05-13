@@ -8,7 +8,7 @@ Esta página se usará para ver desde la App-web todas las raglas que hemos aña
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-	<h2>Aqui puedes ver todas las reglas añadidas con <strong>Snort Rulez</strong> a la vez.</h2>
+	<h2>Aqui puedes ver el contenido de los archivos modificados con <strong>Snort Rulez</strong> a la vez.</h2>
 	<div>
 	    <h4>Reglas añadidas actualmente a 'custom.rules'</h4>
 	    <!-- Leer el archivo 'custom.rules' -->

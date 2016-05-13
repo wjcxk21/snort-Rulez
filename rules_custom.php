@@ -241,20 +241,48 @@ if ($_POST) {
     </div>
     <br>
     <div>
-        <h4>Reglas añadidas actualmente a 'custom.rules'</h4>
-	<!-- Leer el archivo 'custom.rules' -->
-	<textarea cols="100" rows="25" wrap="hard" readonly="yes">
-	    Aqui irá el contentido de custom rules:
-	    <?php
-		$fp = fopen("custom.rules", "r");
+	<h4>Reglas añadidas actualmente a 'custom.rules':</h4>
+	<!-- Leer el archivo 'custom.rules'-->
+	<?php
+	// Elegir los datos que deseamos recuperar de la tabla
+	$query = "SELECT idCustomRule, rule, sid "
+	    . "FROM customRules ";
 
-		while(!feof($fp)) {
-		    $linea = fgets($fp);
-		    echo $linea ;
-		}
+	// Preparamos y ejecutamos la consulta
+	if ($stmt = $conexion->prepare($query)) {
+	    if (!$stmt->execute()) {
+		die('Error de ejecución de la consulta. ' . $conexion->error);
+	    } 
 
-		fclose($fp);
-	    ?>
-	</textarea>
+	    // recogemos los datos
+	    $stmt->bind_result($idRule,$customRule,$sidBD);
+
+	    //cabecera de los datos mostrados
+	    echo "<table class=\"table13 table-bordered table-condensed\">";
+	    //creating our table heading
+	    echo "<tr>";
+		echo "<th>ID</th>";
+		echo "<th>Regla</th>";
+		echo "<th>SID</th>";
+//		echo "<th>Borrar</th>";
+	    echo "</tr>";
+	    //recorrido por el resultado de la consulta
+	    while ($stmt->fetch()) {
+		echo "<tr>";
+		    echo "<td>$idRule</td>";
+		    echo "<td>$customRule</td>";
+		    echo "<td>$sidBD</td>";
+//		    echo "<td><input type=\"checkbox\" name=\"msgBox\" value=\"msgBox\"></td>";
+		echo "</tr>\n";
+	    }
+	    // end table
+	    echo "</table>";
+	    echo "<input type=\"submit\" name=\"save\" value=\"Save\" /><br>";
+	    $stmt->close();
+	} else {
+	    die('Imposible preparar la consulta. ' . $conexion->error);
+	}
+	?>
+	<br>
     </div>
 </div>
