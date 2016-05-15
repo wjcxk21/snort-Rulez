@@ -254,7 +254,7 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	    while ($stmt->fetch()) {
 		echo "<tr>";
 		    echo "<td>$idRule</td>";
-		    echo "<td>$easyRule</td>";
+		    echo "<td>$easyRule"."sid:".$sidBD.";)</td>";
 		    echo "<td>$sidBD</td>";
 		    echo "<td><a href='javascript:borra_cliente(\"$idRule\",\"$type\")'> Elimina </a></td>";
 		echo "</tr>\n";

@@ -101,8 +101,6 @@ if ($_POST) {
 	// INSERT query
 	$query2 = "INSERT INTO customRules (`rule`,`sid`) "
 		. "VALUES (?, ?)";
-    
-	//$query2="select * from rules";
 
 	//'echo' para depuracion
 	//echo $query2,"<br>";
