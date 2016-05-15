@@ -42,7 +42,7 @@ if (!login_check($conexion)) { //no estas autorizado
 	    . "</a></div><br>";
     }
     if (!isset($action)) {
-	$action = $default_action; //acción por defecto $default_action = "lista"
+	$action = $default_action; //acción por defecto 
     }
     if (!file_exists($action . '.php')) { //comprobamos que el fichero exista
 	$action = $default_action; //si no existe mostramos la página por defecto

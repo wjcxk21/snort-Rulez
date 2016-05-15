@@ -14,7 +14,7 @@
         		if (answer) {
         		// si el usuario hace click en ok,
         		// se ejecutar borra.php
-        		window.location = 'borra.php?id=' + id + '&type=' + type;
+        		window.location = 'index.php?action=borra&id=' + id + '&type=' + type;
         		}
             }
         </script>
@@ -26,10 +26,9 @@
 		    <div id="logo">
 			<img src="img/logo_web.png"></img>
 		    </div>
-		<div id="title">
-		    Snort Rulez
-		</div>
-
+		    <div id="title">
+			Snort Rulez
+		    </div>
 		</div>
 		<nav class="melolbar">
 		    <div><a href="index.php?action=instrucciones">Inicio</a></div>
@@ -37,6 +36,7 @@
 		    <div><a href="index.php?action=rules_easy">Reglas Preparadas</a></div>
 		    <div><a href="index.php?action=rules_custom">Reglas Personalizadas</a></div>
 		    <div><a href="index.php?action=rules_view">Ver archivos 'rules'</a></div>
+		    <div><a href="index.php?action=change_pass">Cambiar contraseña</a></div>
 		</nav>
 		<div id="content">
 		    <?php

@@ -6,7 +6,8 @@ $type = isset($_GET['type']) ? $_GET['type'] : die('ERROR: Registro no encontrad
 
 include 'conexion.php';
 
-echo "`".$id."` y `".$type."`";
+//'echo' para depuracion
+//echo "`".$id."` y `".$type."`";
 
 // Preparación de la consulta de borrado
 switch ($type) {
@@ -21,10 +22,11 @@ switch ($type) {
 	break;
 };
 
-echo "<br>".$query;
+//'echo' para depuracion
+//echo "<br>".$query;
 
 if ($stmt = $conexion->prepare($query)){
-	echo "<div>registro preparado.</div>"; 
+	//echo "<div>registro preparado.</div>"; 
     } else {
 	die('Imposible preparar el registro.'.$conexion->error); 
     };
@@ -32,8 +34,9 @@ if ($stmt = $conexion->prepare($query)){
 $stmt->bind_param('i', $id);
 
 if ($stmt->execute()) {
+    //header('Location: index.php?action=instrucciones&borra=yes');
     echo "<br>La regla fue borrada<br><br>"
-    . "<a href=\"./index.php\">Volver al inicio</a>";
+    . "<a href=\"./index.php?action=instrucciones\">Volver al inicio</a>";
 } else {
     die('Imposible borrar el registro.');
 }
