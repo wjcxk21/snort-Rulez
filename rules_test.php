@@ -126,11 +126,11 @@ if ($_POST) {
 	<!-- Leer el archivo 'test.rules'-->
 	<?php
 	// Elegir los datos que deseamos recuperar de la tabla
-	$query = "SELECT idTestRule, rule "
+	$query2 = "SELECT idTestRule, rule "
 	    . "FROM testRules ";
 
 	// Preparamos y ejecutamos la consulta
-	if ($stmt = $conexion->prepare($query)) {
+	if ($stmt = $conexion->prepare($query2)) {
 	    if (!$stmt->execute()) {
 		die('Error de ejecución de la consulta. ' . $conexion->error);
 	    } 

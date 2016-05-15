@@ -229,11 +229,11 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	<!-- Leer el archivo 'easy.rules'-->
 	<?php
 	// Elegir los datos que deseamos recuperar de la tabla
-	$query = "SELECT idEasyRule, rule, sid "
+	$query2 = "SELECT idEasyRule, rule, sid "
 	    . "FROM easyRules ";
 
 	// Preparamos y ejecutamos la consulta
-	if ($stmt = $conexion->prepare($query)) {
+	if ($stmt = $conexion->prepare($query2)) {
 	    if (!$stmt->execute()) {
 		die('Error de ejecución de la consulta. ' . $conexion->error);
 	    } 
@@ -264,7 +264,7 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	    echo "<input type=\"submit\" name=\"save\" value=\"Save\" /><br>";
 	    $stmt->close();
 	} else {
-	    die('Imposible preparar la consulta. ' . $conexion->error);
+	    die('Imposible preparar la consulta: ' . $conexion->error);
 	}
 	?>
 	<br>

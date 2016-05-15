@@ -13,7 +13,6 @@ Esta página se usará para ver desde la App-web todas las raglas que hemos aña
 	    <h4>Reglas añadidas actualmente a 'custom.rules'</h4>
 	    <!-- Leer el archivo 'custom.rules' -->
 	    <textarea cols="100" rows="25" wrap="hard" readonly="yes">
-		Aqui irá el contentido de custom rules:
 		<?php
 		    $fp = fopen("custom.rules", "r");
 
@@ -30,7 +29,6 @@ Esta página se usará para ver desde la App-web todas las raglas que hemos aña
 	    <h4>Reglas añadidas actualmente a 'easy.rules'</h4>
 	    <!-- Leer el archivo 'easy.rules' -->
 	    <textarea cols="100" rows="25" wrap="hard" readonly="yes">
-		Aqui irá el contentido de easy rules:
 		<?php
 		    $fp = fopen("easy.rules", "r");
 
@@ -47,7 +45,6 @@ Esta página se usará para ver desde la App-web todas las raglas que hemos aña
 	    <h4>Reglas añadidas actualmente a 'test.rules'</h4>
 	    <!-- Leer el archivo 'easy.rules' -->
 	    <textarea cols="100" rows="25" wrap="hard" readonly="yes">
-		Aqui irá el contentido de test rules:
 		<?php
 		    $fp = fopen("test.rules", "r");
 
