@@ -8,6 +8,16 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script type="text/JavaScript" src="js/sha512.js"></script>
 	<script type="text/JavaScript" src="js/forms.js"></script>
+	<script type="text/JavaScript">
+            function borra_cliente(id,type){
+        		var answer = confirm('¿Estás seguro que deseas borrar la regla?');
+        		if (answer) {
+        		// si el usuario hace click en ok,
+        		// se ejecutar borra.php
+        		window.location = 'borra.php?id=' + id + '&type=' + type;
+        		}
+            }
+        </script>
     </head>
     <body>
 	<div class="container">

@@ -256,7 +256,7 @@ if ($_POST) {
 
 	    // recogemos los datos
 	    $stmt->bind_result($idRule,$customRule,$sidBD);
-
+	    $type="customRules";
 	    //cabecera de los datos mostrados
 	    echo "<table class=\"table13 table-bordered table-condensed\">";
 	    //creating our table heading
@@ -264,7 +264,7 @@ if ($_POST) {
 		echo "<th>ID</th>";
 		echo "<th>Regla</th>";
 		echo "<th>SID</th>";
-//		echo "<th>Borrar</th>";
+		echo "<th>Borrar</th>";
 	    echo "</tr>";
 	    //recorrido por el resultado de la consulta
 	    while ($stmt->fetch()) {
@@ -272,7 +272,7 @@ if ($_POST) {
 		    echo "<td>$idRule</td>";
 		    echo "<td>$customRule</td>";
 		    echo "<td>$sidBD</td>";
-//		    echo "<td><input type=\"checkbox\" name=\"msgBox\" value=\"msgBox\"></td>";
+		    echo "<td><a href='javascript:borra_cliente(\"$idRule\",\"$type\")'> Elimina </a></td>";
 		echo "</tr>\n";
 	    }
 	    // end table

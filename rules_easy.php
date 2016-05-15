@@ -240,7 +240,7 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 
 	    // recogemos los datos
 	    $stmt->bind_result($idRule,$easyRule,$sidBD);
-
+	    $type="easyRules";
 	    //cabecera de los datos mostrados
 	    echo "<table class=\"table13 table-bordered table-condensed\">";
 	    //creating our table heading
@@ -248,7 +248,7 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		echo "<th>ID</th>";
 		echo "<th>Regla</th>";
 		echo "<th>SID</th>";
-//		echo "<th>Borrar</th>";
+		echo "<th>Borrar</th>";
 	    echo "</tr>";
 	    //recorrido por el resultado de la consulta
 	    while ($stmt->fetch()) {
@@ -256,7 +256,7 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		    echo "<td>$idRule</td>";
 		    echo "<td>$easyRule</td>";
 		    echo "<td>$sidBD</td>";
-//		    echo "<td><input type=\"checkbox\" name=\"msgBox\" value=\"msgBox\"></td>";
+		    echo "<td><a href='javascript:borra_cliente(\"$idRule\",\"$type\")'> Elimina </a></td>";
 		echo "</tr>\n";
 	    }
 	    // end table

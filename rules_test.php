@@ -137,20 +137,21 @@ if ($_POST) {
 
 	    // recogemos los datos
 	    $stmt->bind_result($idRule,$testRule);
-
+	    $type="testRules";
 	    //cabecera de los datos mostrados
 	    echo "<table class=\"table13 table-bordered table-condensed\">";
 	    //creating our table heading
 	    echo "<tr>";
 		echo "<th>ID</th>";
 		echo "<th>Regla</th>";
-//		echo "<th>Borrar</th>";
+		echo "<th> </th>";
 	    echo "</tr>";
 	    //recorrido por el resultado de la consulta
 	    while ($stmt->fetch()) {
 		echo "<tr>";
 		    echo "<td>$idRule</td>";
 		    echo "<td>$testRule</td>";
+		    echo "<td><a href='javascript:borra_cliente(\"$idRule\",\"$type\")'> Elimina </a></td>";
 //		    echo "<td><input type=\"checkbox\" name=\"msgBox\" value=\"msgBox\"></td>";
 		echo "</tr>\n";
 	    }
