@@ -1,7 +1,6 @@
 <!--
 Las reglas que se añadan desde aqui se guardarán en 'custom.rules' y serán reglas
 más personalizadas para usuarios avanzados.
-
 No estan disponibles todas la opciones de personalización de las reglas porque no es el objetivo
 prioritario del proyecto.
 -->
@@ -11,24 +10,18 @@ prioritario del proyecto.
  * falso se ignoraria el PHP y mostraria el formulario.
  */
 $noData = "No has rellenado el campo ";
-
 //Sacar el SID mas alto de la BD y sumarle 1
     //Conex con la BD
     include 'conexion.php';
-
     $query = "SELECT max( `sid` )"
 	    .   "FROM `customRules;";
-
     if ($stmt = $conexion->prepare($query)) {
-
 	// ejecutamos la consulta
 	$stmt->execute();
 	$stmt->bind_result($maxSid);
-
 	// recuperamos la variable
 	$stmt->fetch();
     }
-
     //Si no hay añadida ninguna regla en rules:
     if (empty($maxSid)) {
 	$maxSid="40000000";
@@ -36,7 +29,6 @@ $noData = "No has rellenado el campo ";
     //Cerramos la conexión
     $stmt->close(); 
     $maxSid=$maxSid+1;
-
 if ($_POST) {
     //Revisar campos del formulario
     $arr_opc = array('msgBox','referenceBox', 'classtypeBox','priorityBox','revBox','SIDBox');
@@ -48,9 +40,8 @@ if ($_POST) {
 		    array('direction','Dirección'),
 		    array('destinIP',' 	IP Destino'),
 		    array('destinPort','Puerto Destino')
-		); 
-
-
+		);
+    
     //Revisar que no hay ningun campo obligatorio vacio
     foreach ($arr_req as $r) {
 	if (empty($_REQUEST[$r[0]])) {
@@ -60,7 +51,6 @@ if ($_POST) {
 			. "</div>";
 	};
     };
-
     //Revisar que si se han marcado los campos opcionales se han rellenado los input
     foreach ($arr_opc as $s) {
 	if ($_REQUEST[$s] == $s) {
@@ -73,16 +63,14 @@ if ($_POST) {
 	    };
 	};
     };
-
     //Mostrar la regla y las opciones con un echo
     foreach ($arr_req as $ec) {
-	if (!empty($_REQUEST[$ec])) {
-	    $rule=$rule.$_REQUEST[$ec]." ";
+	if (!empty($_REQUEST[$ec[0]])) {
+	    $rule=$rule.$_REQUEST[$ec[0]]." ";
 	}else{
 	    goto noRule;
 	};
     };
-
     foreach ($arr_opc as $op) {
 	if ($_REQUEST[$op] == $op) {
 	    $noBox= substr($op,0,-3);
@@ -91,20 +79,18 @@ if ($_POST) {
 	    };
 	};
     };
-
     //Echo para mostrar la regla [Modo depuración]
     $ruleZ = $rule."(".$options.")"."\r\n";
     //'echo' para depuracion
-    echo $ruleZ."<br>";
-
+    //echo $ruleZ."<br>";
     //Guardar la regla en la BD
 	// INSERT query
-	$query2 = "INSERT INTO customRules (`rule`,`sid`) "	
-	. "VALUES (?, ?)";
-
+	$query2 = "INSERT INTO customRules (`rule`,`sid`) "
+		. "VALUES (?, ?)";
+    
+	//$query2="select * from rules";
 	//'echo' para depuracion
-	echo $query2,"<br>";
-
+	//echo $query2,"<br>";
 	// prepare query for execution -> Aquí se comprueba la sintaxis
 	//  de la consulta y se reservan los recursos necesarios
 	//  para ejecutarla.
@@ -113,10 +99,8 @@ if ($_POST) {
 	} else {
 	    die('Imposible preparar el registro.'.$stmt->error);
 	}
-
 	// asociar los parámetros
 	$stmt->bind_param('si',$ruleZ,$_POST['SID']);
-
 	// ejecutar la query
 	if($stmt->execute()){
 	    echo "<div>Registro guardado.</div>";
@@ -130,7 +114,6 @@ if ($_POST) {
 	//Sacar todas las reglas añadidas a la tabla customRules para añadirlas al .rules
 	$sql = "SELECT * FROM `customRules`";
 	$result = $conexion->query($sql);
-
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
@@ -140,7 +123,6 @@ if ($_POST) {
 	    };
 	};    
 	$conexion->close();
-
 	//Escribir la reglas en custom.rules
 	$fp = fopen("custom.rules", "w");
 	fputs($fp, $inText);
@@ -148,11 +130,8 @@ if ($_POST) {
 	
 	//Para poder seguir añadiendo reglas sin necesidad de recargar la pagina
 	$maxSid=$maxSid+1;
-
     //Salida cuando faltan campos
     noRule:;
-
-
 }
 ?>
 
@@ -215,7 +194,7 @@ if ($_POST) {
 		</tr>
 		<tr>
 		    <td><input type="checkbox" name="msgBox" value="msgBox"></td>
-		    <td colspan="6">Añadir mensaje: <input type="text" name="msg" value=""></td>
+		    <td colspan="6">Añadir mensaje: <input type="text" name="msg" value="">  Recuerda usar comillas (" ").</td>
 		</tr>
 		<tr>
 		    <td><input type="checkbox" name="referenceBox" value="referenceBox"></td>
@@ -241,7 +220,7 @@ if ($_POST) {
     <div>
 	<h4>Reglas añadidas actualmente a 'custom.rules':</h4>
 	<!-- Leer el archivo 'custom.rules'-->
-	<?php
+	<?php 
 	// Elegir los datos que deseamos recuperar de la tabla
 	$query = "SELECT idCustomRule, rule, sid "
 	    . "FROM customRules ";
