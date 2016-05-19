@@ -95,15 +95,15 @@ if ($_POST) {
     //Echo para mostrar la regla [Modo depuración]
     $ruleZ = $rule."(".$options.")"."\r\n";
     //'echo' para depuracion
-    //echo $ruleZ."<br>";
+    echo $ruleZ."<br>";
 
     //Guardar la regla en la BD
 	// INSERT query
-	$query2 = "INSERT INTO customRules (`rule`,`sid`) "
-		. "VALUES (?, ?)";
+	$query2 = "INSERT INTO customRules (`rule`,`sid`) "	
+	. "VALUES (?, ?)";
 
 	//'echo' para depuracion
-	//echo $query2,"<br>";
+	echo $query2,"<br>";
 
 	// prepare query for execution -> Aquí se comprueba la sintaxis
 	//  de la consulta y se reservan los recursos necesarios
