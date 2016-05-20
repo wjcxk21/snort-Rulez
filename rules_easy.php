@@ -224,10 +224,10 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	</form> 
     </div>
     <br>
-    <div>
+    <!--div> Movido a rules_view.php
 	<h4>Reglas añadidas actualmente a 'easy.rules':</h4>
-	<!-- Leer el archivo 'easy.rules'-->
-	<?php
+	<!-- Leer el archivo 'easy.rules'
+	<?php /*
 	// Elegir los datos que deseamos recuperar de la tabla
 	$query2 = "SELECT idEasyRule, rule, sid "
 	    . "FROM easyRules ";
@@ -261,12 +261,11 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	    }
 	    // end table
 	    echo "</table>";
-	    echo "<input type=\"submit\" name=\"save\" value=\"Save\" /><br>";
 	    $stmt->close();
 	} else {
 	    die('Imposible preparar la consulta: ' . $conexion->error);
-	}
+	}*/
 	?>
 	<br>
-    </div>
+    </div-->
 </div>

@@ -121,10 +121,10 @@ if ($_POST) {
 	</form> 
     </div>
     <br>
-    <div>
+    <!--div> Movido a rules_view.php
 	<h4>Reglas añadidas actualmente a 'test.rules':</h4>
-	<!-- Leer el archivo 'test.rules'-->
-	<?php
+	<!-- Leer el archivo 'test.rules'
+	<?php /*
 	// Elegir los datos que deseamos recuperar de la tabla
 	$query2 = "SELECT idTestRule, rule "
 	    . "FROM testRules ";
@@ -157,12 +157,11 @@ if ($_POST) {
 	    }
 	    // end table
 	    echo "</table>";
-	    echo "<input type=\"submit\" name=\"save\" value=\"Save\" /><br>";
 	    $stmt->close();
 	} else {
 	    die('Imposible preparar la consulta. ' . $conexion->error);
-	}
+	}*/
 	?>
 	<br>
-    </div>
+    </div-->
 </div>

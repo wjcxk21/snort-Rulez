@@ -217,16 +217,16 @@ if ($_POST) {
 	</form>
     </div>
     <br>
-    <div>
+    <!--div> Movido a rules_view.php
 	<h4>Reglas añadidas actualmente a 'custom.rules':</h4>
-	<!-- Leer el archivo 'custom.rules'-->
-	<?php 
+	<!-- Leer el archivo 'custom.rules'
+	<?php /*
 	// Elegir los datos que deseamos recuperar de la tabla
-	$query = "SELECT idCustomRule, rule, sid "
+	$query2 = "SELECT idCustomRule, rule, sid "
 	    . "FROM customRules ";
 
 	// Preparamos y ejecutamos la consulta
-	if ($stmt = $conexion->prepare($query)) {
+	if ($stmt = $conexion->prepare($query2)) {
 	    if (!$stmt->execute()) {
 		die('Error de ejecución de la consulta. ' . $conexion->error);
 	    } 
@@ -254,12 +254,11 @@ if ($_POST) {
 	    }
 	    // end table
 	    echo "</table>";
-	    echo "<input type=\"submit\" name=\"save\" value=\"Save\" /><br>";
 	    $stmt->close();
 	} else {
 	    die('Imposible preparar la consulta. ' . $conexion->error);
-	}
+	}*/
 	?>
 	<br>
-    </div>
+    </div-->
 </div>

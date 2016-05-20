@@ -10,52 +10,135 @@ Esta página se usará para ver desde la App-web todas las raglas que hemos aña
     <body>
 	<h2>Aqui puedes ver el contenido de los archivos modificados con <strong>Snort Rulez</strong> a la vez.</h2>
 	<div>
-	    <h4>Reglas añadidas actualmente a 'custom.rules'</h4>
-	    <!-- Leer el archivo 'custom.rules' -->
-	    <textarea cols="100" rows="25" wrap="hard" readonly="yes">
-		<?php
-		    $fp = fopen("custom.rules", "r");
+	    <h4>Reglas añadidas actualmente a 'custom.rules':</h4>
+	    <!-- Leer el archivo 'custom.rules'-->
+	    <?php 
+	    // Elegir los datos que deseamos recuperar de la tabla
+	    $query2 = "SELECT idCustomRule, rule, sid "
+		. "FROM customRules ";
 
-		    while(!feof($fp)) {
-			$linea = fgets($fp);
-			echo $linea ;
-		    }
+	    // Preparamos y ejecutamos la consulta
+	    if ($stmt = $conexion->prepare($query2)) {
+		if (!$stmt->execute()) {
+		    die('Error de ejecución de la consulta. ' . $conexion->error);
+		} 
 
-		    fclose($fp);
-		?>
-	    </textarea>
+		// recogemos los datos
+		$stmt->bind_result($idRule,$customRule,$sidBD);
+		$type="customRules";
+		//cabecera de los datos mostrados
+		echo "<table class=\"table13 table-bordered table-condensed\">";
+		//creating our table heading
+		echo "<tr>";
+		    echo "<th>ID</th>";
+		    echo "<th>Regla</th>";
+		    echo "<th>SID</th>";
+		    echo "<th>Borrar</th>";
+		echo "</tr>";
+		//recorrido por el resultado de la consulta
+		while ($stmt->fetch()) {
+		    echo "<tr>";
+			echo "<td>$idRule</td>";
+			echo "<td>$customRule</td>";
+			echo "<td>$sidBD</td>";
+			echo "<td><a href='javascript:borra_cliente(\"$idRule\",\"$type\")'> Elimina </a></td>";
+		    echo "</tr>\n";
+		}
+		// end table
+		echo "</table>";
+		$stmt->close();
+	    } else {
+		die('Imposible preparar la consulta. ' . $conexion->error);
+	    }
+	    ?>
+	    <br>
 	</div>
 	<div>
-	    <h4>Reglas añadidas actualmente a 'easy.rules'</h4>
-	    <!-- Leer el archivo 'easy.rules' -->
-	    <textarea cols="100" rows="25" wrap="hard" readonly="yes">
-		<?php
-		    $fp = fopen("easy.rules", "r");
+	<h4>Reglas añadidas actualmente a 'custom.rules':</h4>
+	    <!-- Leer el archivo 'custom.rules'-->
+	    <?php 
+	    // Elegir los datos que deseamos recuperar de la tabla
+	    $query2 = "SELECT idCustomRule, rule, sid "
+		. "FROM customRules ";
 
-		    while(!feof($fp)) {
-			$linea = fgets($fp);
-			echo $linea ;
-		    }
+	    // Preparamos y ejecutamos la consulta
+	    if ($stmt = $conexion->prepare($query2)) {
+		if (!$stmt->execute()) {
+		    die('Error de ejecución de la consulta. ' . $conexion->error);
+		} 
 
-		    fclose($fp);
-		?>
-	    </textarea>
+		// recogemos los datos
+		$stmt->bind_result($idRule,$customRule,$sidBD);
+		$type="customRules";
+		//cabecera de los datos mostrados
+		echo "<table class=\"table13 table-bordered table-condensed\">";
+		//creating our table heading
+		echo "<tr>";
+		    echo "<th>ID</th>";
+		    echo "<th>Regla</th>";
+		    echo "<th>SID</th>";
+		    echo "<th>Borrar</th>";
+		echo "</tr>";
+		//recorrido por el resultado de la consulta
+		while ($stmt->fetch()) {
+		    echo "<tr>";
+			echo "<td>$idRule</td>";
+			echo "<td>$customRule</td>";
+			echo "<td>$sidBD</td>";
+			echo "<td><a href='javascript:borra_cliente(\"$idRule\",\"$type\")'> Elimina </a></td>";
+		    echo "</tr>\n";
+		}
+		// end table
+		echo "</table>";
+		$stmt->close();
+	    } else {
+		die('Imposible preparar la consulta. ' . $conexion->error);
+	    }
+	    ?>
+	    <br>
 	</div>
 	<div>
-	    <h4>Reglas añadidas actualmente a 'test.rules'</h4>
-	    <!-- Leer el archivo 'easy.rules' -->
-	    <textarea cols="100" rows="25" wrap="hard" readonly="yes">
-		<?php
-		    $fp = fopen("test.rules", "r");
+	    <h4>Reglas añadidas actualmente a 'test.rules':</h4>
+	    <!-- Leer el archivo 'test.rules'-->
+	    <?php
+	    // Elegir los datos que deseamos recuperar de la tabla
+	    $query2 = "SELECT idTestRule, rule "
+		. "FROM testRules ";
 
-		    while(!feof($fp)) {
-			$linea = fgets($fp);
-			echo $linea ;
-		    }
+	    // Preparamos y ejecutamos la consulta
+	    if ($stmt = $conexion->prepare($query2)) {
+		if (!$stmt->execute()) {
+		    die('Error de ejecución de la consulta. ' . $conexion->error);
+		} 
 
-		    fclose($fp);
-		?>
-	    </textarea>
+		// recogemos los datos
+		$stmt->bind_result($idRule,$testRule);
+		$type="testRules";
+		//cabecera de los datos mostrados
+		echo "<table class=\"table13 table-bordered table-condensed\">";
+		//creating our table heading
+		echo "<tr>";
+		    echo "<th>ID</th>";
+		    echo "<th>Regla</th>";
+		    echo "<th> </th>";
+		echo "</tr>";
+		//recorrido por el resultado de la consulta
+		while ($stmt->fetch()) {
+		    echo "<tr>";
+			echo "<td>$idRule</td>";
+			echo "<td>$testRule</td>";
+			echo "<td><a href='javascript:borra_cliente(\"$idRule\",\"$type\")'> Elimina </a></td>";
+    //		    echo "<td><input type=\"checkbox\" name=\"msgBox\" value=\"msgBox\"></td>";
+		    echo "</tr>\n";
+		}
+		// end table
+		echo "</table>";
+		$stmt->close();
+	    } else {
+		die('Imposible preparar la consulta. ' . $conexion->error);
+	    }
+	    ?>
+	    <br>
 	</div>
     </body>
 </html>
