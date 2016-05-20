@@ -8,9 +8,11 @@ Esta página se usará para ver desde la App-web todas las raglas que hemos aña
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-	<h2>Aqui puedes ver el contenido de los archivos modificados con <strong>Snort Rulez</strong> a la vez.</h2>
+	<h3>Aqui puedes ver el contenido de cada tabla de reglas modificada con <strong>Snort Rulez</strong> a la vez.</h3>
+	<br>
 	<div>
-	    <h4>Reglas añadidas actualmente a 'custom.rules':</h4>
+	    <a name="custom"></a>
+	    <h4>Reglas añadidas actualmente a '<a href="index.php?action=rules_custom">custom.rules</a>':</h4>
 	    <!-- Leer el archivo 'custom.rules'-->
 	    <?php 
 	    // Elegir los datos que deseamos recuperar de la tabla
@@ -54,12 +56,13 @@ Esta página se usará para ver desde la App-web todas las raglas que hemos aña
 	    <br>
 	</div>
 	<div>
-	<h4>Reglas añadidas actualmente a 'custom.rules':</h4>
-	    <!-- Leer el archivo 'custom.rules'-->
+	    <a name="easy"></a>
+	    <h4>Reglas añadidas actualmente a '<a href="index.php?action=rules_easy">easy.rules</a>':</h4>
+	    <!-- Leer el archivo 'easy.rules' -->
 	    <?php 
 	    // Elegir los datos que deseamos recuperar de la tabla
-	    $query2 = "SELECT idCustomRule, rule, sid "
-		. "FROM customRules ";
+	    $query2 = "SELECT idEasyRule, rule, sid "
+		. "FROM easyRules ";
 
 	    // Preparamos y ejecutamos la consulta
 	    if ($stmt = $conexion->prepare($query2)) {
@@ -68,8 +71,8 @@ Esta página se usará para ver desde la App-web todas las raglas que hemos aña
 		} 
 
 		// recogemos los datos
-		$stmt->bind_result($idRule,$customRule,$sidBD);
-		$type="customRules";
+		$stmt->bind_result($idRule,$easyRule,$sidBD);
+		$type="easyRules";
 		//cabecera de los datos mostrados
 		echo "<table class=\"table13 table-bordered table-condensed\">";
 		//creating our table heading
@@ -83,7 +86,7 @@ Esta página se usará para ver desde la App-web todas las raglas que hemos aña
 		while ($stmt->fetch()) {
 		    echo "<tr>";
 			echo "<td>$idRule</td>";
-			echo "<td>$customRule</td>";
+			echo "<td>$easyRule"."sid:".$sidBD.";)</td>";
 			echo "<td>$sidBD</td>";
 			echo "<td><a href='javascript:borra_cliente(\"$idRule\",\"$type\")'> Elimina </a></td>";
 		    echo "</tr>\n";
@@ -92,13 +95,14 @@ Esta página se usará para ver desde la App-web todas las raglas que hemos aña
 		echo "</table>";
 		$stmt->close();
 	    } else {
-		die('Imposible preparar la consulta. ' . $conexion->error);
+		die('Imposible preparar la consulta: ' . $conexion->error);
 	    }
 	    ?>
 	    <br>
 	</div>
 	<div>
-	    <h4>Reglas añadidas actualmente a 'test.rules':</h4>
+	    <a name="test"></a>
+	    <h4>Reglas añadidas actualmente a '<a href="index.php?action=rules_test">test.rules</a>':</h4>
 	    <!-- Leer el archivo 'test.rules'-->
 	    <?php
 	    // Elegir los datos que deseamos recuperar de la tabla

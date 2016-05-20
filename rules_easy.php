@@ -223,7 +223,7 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	    <input type="submit" name="save" value="Save" />
 	</form> 
     </div>
-    <br>
+    <br>  
     <!--div> Movido a rules_view.php
 	<h4>Reglas añadidas actualmente a 'easy.rules':</h4>
 	<!-- Leer el archivo 'easy.rules'
@@ -268,4 +268,18 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	?>
 	<br>
     </div-->
+    <div>
+	<h4>Contenido del archivo 'easy.rules' actualmente (<a href="index.php?action=rules_view#easy">Ver tabla</a>)</h4>
+	<!-- Leer el archivo 'easy.rules' -->
+	<textarea cols="100" rows="25" wrap="hard" readonly="yes">
+	    <?php
+		$fp = fopen("easy.rules", "r");
+		while(!feof($fp)) {
+		    $linea = fgets($fp);
+		    echo $linea ;
+		}
+		fclose($fp);
+	    ?>
+	</textarea>
+    </div>
 </div>

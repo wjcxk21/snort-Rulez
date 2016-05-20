@@ -164,4 +164,18 @@ if ($_POST) {
 	?>
 	<br>
     </div-->
+    <div>
+	<h4>Contenido del archivo 'test.rules' actualmente (<a href="index.php?action=rules_view#test">Ver tabla</a>)</h4>
+	<!-- Leer el archivo 'test.rules' -->
+	<textarea cols="100" rows="25" wrap="hard" readonly="yes">
+	    <?php
+		$fp = fopen("test.rules", "r");
+		while(!feof($fp)) {
+		    $linea = fgets($fp);
+		    echo $linea ;
+		}
+		fclose($fp);
+	    ?>
+	</textarea>
+    </div>
 </div>
