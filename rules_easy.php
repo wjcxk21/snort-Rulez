@@ -186,9 +186,9 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
-		$inText=$inText.$row['rule']."sid:".$row['sid'].";)"."\r\n ";
+		$inText=$inText.$row['rule']."sid:".$row['sid'].";)"."\n ";
 		//'echo' para depuracion
-		//echo $row['rule']."\r\n"."<br>";
+		//echo $row['rule']."\n"."<br>";
 	    };
 	};    
 	$conexion->close();

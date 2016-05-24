@@ -80,7 +80,7 @@ if ($_POST) {
 	};
     };
     //Echo para mostrar la regla [Modo depuración]
-    $ruleZ = $rule."(".$options.")"."\r\n";
+    $ruleZ = $rule."(".$options.")"."\n";
     //'echo' para depuracion
     //echo $ruleZ."<br>";
     //Guardar la regla en la BD
@@ -119,7 +119,7 @@ if ($_POST) {
 	    while($row = $result->fetch_assoc()) {
 		$inText=$inText.$row['rule'];
 		//'echo' para depuracion
-		//echo $row['rule']."\r\n"."<br>";
+		//echo $row['rule']."\n"."<br>";
 	    };
 	};    
 	$conexion->close();

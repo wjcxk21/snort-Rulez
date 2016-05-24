@@ -84,9 +84,9 @@ if ($_POST) {
     if ($result->num_rows > 0) {
 	// output data of each row
 	while($row = $result->fetch_assoc()) {
-	    $inText=$inText.$row['rule']."\r\n ";
+	    $inText=$inText.$row['rule']."\n ";
 	    //'echo' para depuracion
-	    //echo $row['rule']."\r\n"."<br>";
+	    //echo $row['rule']."\n"."<br>";
 	};
     };    
     $conexion->close();
