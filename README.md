@@ -1,5 +1,6 @@
 ### Snort Rulez
 
-Aplicación para añadir mediante GUI reglas al Snort.
+Aplicación web para la gestión de reglas básicas para el Snort mediante GUI.
 
+**Instrucciones**
 *En proceso.*
