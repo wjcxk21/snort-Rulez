@@ -35,7 +35,7 @@
 		    <div><a href="index.php?action=rules_easy">Reglas Preparadas</a></div>
 		    <div><a href="index.php?action=rules_custom">Reglas Personalizadas</a></div>
 		    <div><a href="index.php?action=rules_view">Ver tablas de reglas</a></div>
-		    <!--div><a href="index.php?action=change_pass">Cambiar contraseña</a></div-->
+		    <div><a href="index.php?action=change_pass">Cambiar contraseña</a></div>
 		</nav>
 		<div id="content">
 		    <?php
