@@ -34,9 +34,10 @@ if ! [ -d $PATH_PHP ]; then
 fi
 mkdir -p $PATH_PHP/SnortRulez
 cp -r ./* $PATH_PHP/SnortRulez
-chown www-data:www-data $PATH_PHP/test.rules
-chown www-data:www-data $PATH_PHP/easy.rules
-chown www-data:www-data $PATH_PHP/custom.rules
+chown www-data:www-data $PATH_PHP/SnortRulez/test.rules
+chown www-data:www-data $PATH_PHP/SnortRulez/easy.rules
+chown www-data:www-data $PATH_PHP/SnortRulez/custom.rules
+chmod -R a+r $PATH_PHP/SnortRulez
 
 #Crear los enlaces de los archivos rules a su ruta correspondiente
 echo "Escriba la ruta donde estan guardadas las reglas."
