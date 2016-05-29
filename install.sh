@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Este script instala y configura los componentes necesarios para poder usar
+# la aplicación "SnortRulez"
+
 #########################################
 # Got r00t o are u Amy Acker?
 #########################################
