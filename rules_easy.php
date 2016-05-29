@@ -220,7 +220,7 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 
 	    <!-- Probar esta: alert tcp $EXTERNAL_NET any -> $HOME_NET any //(msg: "Cuidado, están descargando MP3";flags: AP; content: ".mp3";) -->
 	    <input type="checkbox" name="regla5" value="regla5">Detección descarga de archivos .mp3 <br>
-	    <input type="submit" name="save" value="Save" />
+	    <input type="submit" name="save" value="Enviar" />
 	</form> 
     </div>
     <br>  

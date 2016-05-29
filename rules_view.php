@@ -124,7 +124,7 @@ Esta página se usará para ver desde la App-web todas las raglas que hemos aña
 		echo "<tr>";
 		    echo "<th>ID</th>";
 		    echo "<th>Regla</th>";
-		    echo "<th> </th>";
+		    echo "<th>Borrar</th>";
 		echo "</tr>";
 		//recorrido por el resultado de la consulta
 		while ($stmt->fetch()) {

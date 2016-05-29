@@ -19,15 +19,15 @@ if ($_POST) {
     if (($_REQUEST['regla1'] || ($_REQUEST['regla2']) || $_REQUEST['regla3'])) {
 	if ($_REQUEST['regla1']) {
 	    //echo "alert icmp any any -> any any (msg:\"Ping al IDS detection\";sid:13000000;rev:1;)<br>";	    
-	    $values="('alert icmp any any -> any any (msg:\"Ping al IDS detection\";sid:13000000;rev:1;)')";
+	    $values="(1,'alert icmp any any -> any any (msg:\"Ping al IDS detection\";sid:13000000;rev:1;)')";
 	};
 	
 	if ($_REQUEST['regla2']) {
 	    //echo "alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)<br>";
 	    if (empty($values)){
-		$values="('alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)')";
+		$values="(2,'alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)')";
 	    }else{
-		$values=$values.",('alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)')";
+		$values=$values.",(2,'alert tcp any any -> any 22:23 (msg:\"ssh detection(tcp)\";sid:13000001;rev:2;)')";
 	    }
 	};
 	
@@ -35,11 +35,11 @@ if ($_POST) {
 	    //echo "alert tcp any any -> any 80 (msg:\"http detection(tcp)\";sid:13000002;rev:2;)<br>"
 	    //.	 "alert tcp any any -> any 443 (msg:\"https detection(tcp)\";sid:13000003;rev:2;)<br>";
 	    if (empty($values)){
-		$values="('alert tcp any any -> any 80 (msg:\"http detection(tcp)\";sid:13000002;rev:2;)'),"
-		      . "('alert tcp any any -> any 443 (msg:\"https detection(tcp)\";sid:13000003;rev:2;)')";
+		$values="(3,'alert tcp any any -> any 80 (msg:\"http detection(tcp)\";sid:13000002;rev:2;)'),"
+		      . "(4,'alert tcp any any -> any 443 (msg:\"https detection(tcp)\";sid:13000003;rev:2;)')";
 	    }else{
-		$values=$values.",('alert tcp any any -> any 80 (msg:\"http detection(tcp)\";sid:13000002;rev:2;)'),"
-			       . "('alert tcp any any -> any 443 (msg:\"https detection(tcp)\";sid:13000003;rev:2;)')";
+		$values=$values.",(3,'alert tcp any any -> any 80 (msg:\"http detection(tcp)\";sid:13000002;rev:2;)'),"
+			       . "(4,'alert tcp any any -> any 443 (msg:\"https detection(tcp)\";sid:13000003;rev:2;)')";
 	    }
 	    
 	};
@@ -48,7 +48,7 @@ if ($_POST) {
 	    // Conexión a la base de datos haciendo uso de conexion.php
 	    include 'conexion.php';
 	    
-	    $query="INSERT INTO testRules (rule) VALUES $values";
+	    $query="REPLACE INTO testRules (idTestRule,rule) VALUES $values";
 	    
 	    //'echo' para depuracion
 	    //echo "-------------------------<br>";
@@ -117,7 +117,7 @@ if ($_POST) {
 	    <!-- alert tcp any any -> any 443 (msg:\"https detection(tcp)\";sid:20000017;rev:2;) -->
 	    <input type="checkbox" name="regla3" value="Regla aqui">Detección de cualquier conexión Web (puertos 80 y 443)<br>
 
-	    <input type="submit" name="save" value="Save" />
+	    <input type="submit" name="save" value="Enviar" />
 	</form> 
     </div>
     <br>
