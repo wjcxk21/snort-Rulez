@@ -13,12 +13,15 @@ include 'conexion.php';
 switch ($type) {
     case 'testRules':
 	$query = "DELETE FROM testRules WHERE idTestRule = ?";
+	$sql = "SELECT * FROM `testRules`";
 	break;
     case 'easyRules':
 	$query = "DELETE FROM easyRules WHERE idEasyRule = ?";
+	$sql = "SELECT * FROM `easyRules`";
 	break;
     case 'customRules':
 	$query = "DELETE FROM customRules WHERE idCustomRule = ?";
+	$sql = "SELECT * FROM `customRules`";
 	break;
 };
 
@@ -40,5 +43,39 @@ if ($stmt->execute()) {
 } else {
     die('Imposible borrar el registro.');
 }
+//Cerramos la conexión
+$stmt->close();
+
+//Actualizar las reglas añadidas a la tabla correspondiente para añadirlas a su .rules
+    $result = $conexion->query($sql);
+
+    if ($result->num_rows > 0) {
+	// output data of each row
+	while($row = $result->fetch_assoc()) {
+	    $inText=$inText.$row['rule']."\n ";
+	    //'echo' para depuracion
+	    //echo $row['rule']."\n"."<br>";
+	};
+    };    
+    $conexion->close();
+
+    //Escribir la reglas en *.rules
+    switch ($type) {
+	case 'testRules':
+	    $fp = fopen("test.rules", "w");
+	    fputs($fp, $inText);
+	    fclose($fp);
+	    break;
+	case 'easyRules':
+	    $fp = fopen("easy.rules", "w");
+	    fputs($fp, $inText);
+	    fclose($fp);
+	    break;
+	case 'customRules':
+	    $fp = fopen("custom.rules", "w");
+	    fputs($fp, $inText);
+	    fclose($fp);
+	    break;
+    };
 ?>
 

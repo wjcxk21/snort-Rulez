@@ -53,7 +53,8 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 			. $noAddr."primera regla.<br>"
 			. "</div>";
 		}else {
-		    $rule1="'alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; '";
+		    $sid1=$maxSplus1;
+		    $rule1="'alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; sid:".$sid1.';)\'';
 		    $sid1="'".$maxSplus1."'";
 		    //'echo' para depuracion
 		    //echo "alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; sid:".$maxSplus1.";)<br>";
@@ -73,10 +74,9 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 			. $noAddr."segunda regla.<br>"
 			. "</div>";
 		}else {
-		    
-		    $rule2="'alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; '";
+		    $sid2=$maxSplus2;		    
+		    $rule2="'alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; sid:".$sid2.';)\'';
 		    $sid2="'".$maxSplus2."'";
-		    //'echo' para depuracion
 		    //echo "alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; sid:".$maxSplus2.";)<br>";
 		    //echo "<p>----------------------------------</p>";
 		    
@@ -97,8 +97,8 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 			. $noAddr."tercera regla.<br>"
 			. "</div>";
 		}else {
-		    
-		    $rule3="'alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; '";
+		    $sid3=$maxSplus3;		    
+		    $rule3="'alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; sid:".$sid3.';)\'';
 		    $sid3="'".$maxSplus3."'";
 		    //'echo' para depuracion
 		    //echo "alert icmp any any -> ".$_POST['addr3']." any (msg:\"Detectado escaneo NMAP\"; classtype:misc-activity; rev:1; sid:".$maxSplus3.";)";
@@ -118,10 +118,9 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		//'echo' para depuracion
 		//echo 'alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "Detectada descarga torrent"; content:"HTTP/"; content:".torrent"; flow:established,to_server; classtype:policy-violation; rev:1; sid:20000001;)';
 		//echo "<p>----------------------------------</p>";
-		
-		$rule4='\'alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "Detectada descarga torrent"; content:"HTTP/"; content:".torrent"; flow:established,to_server; classtype:policy-violation; rev:1; \'';
 		$sid4="'20000001'";
-		
+		$rule4='\'alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "Detectada descarga torrent"; content:"HTTP/"; content:".torrent"; flow:established,to_server; classtype:policy-violation; rev:1; sid:20000001;)\'';
+					
 		//VALUE de la regla 4
 		    if (empty($values)){
 			$values="($rule4,$sid4)";
@@ -135,9 +134,9 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		//'echo' para depuracion
 		//echo 'alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Detectada descarga MP3";flags: AP; content: ".mp3"; classtype:policy-violation; rev:1; sid:20000002;)';
 		//echo "<p>----------------------------------</p>";
-		
-		$rule5='\'alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Detectada descarga MP3";flags: AP; content: ".mp3"; classtype:policy-violation; rev:1; \'';
 		$sid5="'20000002'";
+		$rule5='\'alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Detectada descarga MP3";flags: AP; content: ".mp3"; classtype:policy-violation; rev:1; sid:20000002;)\'';
+
 		
 		//VALUE de la regla 5
 		    if (empty($values)){
@@ -186,7 +185,7 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
-		$inText=$inText.$row['rule']."sid:".$row['sid'].";)"."\n ";
+		$inText=$inText.$row['rule']."\n ";
 		//'echo' para depuracion
 		//echo $row['rule']."\n"."<br>";
 	    };
