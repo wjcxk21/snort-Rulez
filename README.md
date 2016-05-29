@@ -10,7 +10,6 @@ Aplicación web para la gestión de reglas básicas para el Snort mediante GUI.
     <li>Haber añadido los archivos 'easy.rules', 'custom.rules' y 'test.rules' en la configuración de Snort.</li>
     <li>Y haber configurado el módulo de 'incron' para la actualizacion automatica del sensor.</li>
 </ul>
-<p>Si le falta alguno de estos pasos consulte la documentación.</p>
 
 <h3><u>Tipos de reglas</u></h3>
 <ul>
