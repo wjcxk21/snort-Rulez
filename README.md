@@ -10,7 +10,7 @@ Desarrollada para usarse en Security Onion, pero podria funcionar sin problemas 
 <p>Antes de proceder con la instalación de Snort Rulez es necesario tener instalado Snort, una BBDD MySQL y los paquetes necesarios para ejecutar PHP.</p>
 <p>Primero descarga todos los archivos desde Github, se puede descargar como un archivo ZIP.<br>
 
-A continuación ejecuta el script de instalacion: <code>./install.sh</code> y sigue los pasos que te indica. Puede que antes necesites darle permisos de ejecución.
+A continuación ejecuta el script de instalación: <code>./install.sh</code> y sigue los pasos que te indica. Puede que antes necesites darle permisos de ejecución.
 </p>
 </div>
 
@@ -19,7 +19,7 @@ A continuación ejecuta el script de instalacion: <code>./install.sh</code> y si
 <p>Antes de usar esta aplicación debe:
 <ul>
     <li>Haber añadido los archivos '<code>easy.rules</code>', '<code>custom.rules</code>' y '<code>test.rules</code>' en la configuración de Snort.</li>
-    <li>Y haber configurado el módulo de 'incron' para la actualizacion automatica del sensor. <br><em>Este paso lo realiza el script de instalacion pero hay que asegurarse de que el daemon ¡incrond¡ este activo</em>.</li>
+    <li>Y haber configurado el módulo de 'incron' para la actualizacion automatica del sensor. <br><em>Este paso lo realiza el script de instalación pero hay que asegurarse de que el daemon ¡incrond¡ este activo</em>.</li>
 </ul>
 
 <h3><u>Tipos de reglas</u></h3>
