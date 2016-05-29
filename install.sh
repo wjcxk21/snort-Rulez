@@ -42,6 +42,7 @@ chown www-data:www-data $PATH_PHP/SnortRulez/easy.rules
 chown www-data:www-data $PATH_PHP/SnortRulez/custom.rules
 chmod -R a+r $PATH_PHP/SnortRulez
 
+cp restart-IDS /bin
 #Crear los enlaces de los archivos rules a su ruta correspondiente
 echo "Escriba la ruta donde estan guardadas las reglas."
 echo "Si estas usando SecurityOnion la ruta probablemente sera: /etc/nsm/rules"
