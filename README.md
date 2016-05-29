@@ -9,7 +9,8 @@ Desarrollada para usarse en Security Onion, pero podria funcionar sin problemas 
 <div>
 <p>Antes de proceder con la instalación de Snort Rulez es necesario tener instalado Snort, una BBDD MySQL y los paquetes necesarios para ejecutar PHP.</p>
 <p>Primero descarga todos los archivos desde Github, se puede descargar como un archivo ZIP.<br>
-A continuación ejecuta el script de instalacion <em>install.sh</em> y sigue los pasos que te indica.
+
+A continuación ejecuta el script de instalacion: <code>./install.sh</code> y sigue los pasos que te indica. Puede que antes necesites darle permisos de ejecución.
 </p>
 </div>
 
