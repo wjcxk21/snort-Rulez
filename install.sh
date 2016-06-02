@@ -41,6 +41,7 @@ chown www-data:www-data $PATH_PHP/SnortRulez/test.rules
 chown www-data:www-data $PATH_PHP/SnortRulez/easy.rules
 chown www-data:www-data $PATH_PHP/SnortRulez/custom.rules
 chmod -R a+r $PATH_PHP/SnortRulez
+mv $PATH_PHP/SnortRulez/config_def.php $PATH_PHP/SnortRulez/config.php
 
 cp restart-IDS /bin
 #Crear los enlaces de los archivos rules a su ruta correspondiente
@@ -94,6 +95,7 @@ echo "/var/www/html/php/SnortRulez/easy.rules IN_MODIFY restart-IDS" >> /var/spo
 #########################################
 # Recordar leer el LEEME.txt
 #########################################
+echo "Configura el archivo config.php con tu configuración" >> LEEME.txt
 echo "Instalación finalizada. Fecha y hora: `date` " >> LEEME.txt
 echo "No olvides leer el archivo LEEME.txt para terminar con la instalación correctamente."
 echo
