@@ -1,0 +1,6 @@
+别忘了将incrond守护程序加入系统引导。
+别忘了将incrond守护程序加入系统引导。
+El usuario y la contraseña por defecto para la aplicación son: ntesla jdtedison
+访问该程序的默认用户名和口令是：ntesla jdtedison
+可以使用配置文件config.php完成配置
+安装完毕。时间日期：Wed May 29 16:42:04 CST 2019

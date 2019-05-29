@@ -1,15 +1,13 @@
 <!--
-Las reglas que se añadan desde aqui se guardarán en 'custom.rules' y serán reglas
-más personalizadas para usuarios avanzados.
-No estan disponibles todas la opciones de personalización de las reglas porque no es el objetivo
-prioritario del proyecto.
+从此处添加的规则将保存在“custom.rules”中，并为高级用户提供更加个性化的规则。
+并非所有规则的自定义选项都可用，因为它不是项目的优先目标。
 -->
 <?php
 /* Si se llama desde el form, contendra datos de 'input' y al no ser
  * $_REQUEST falso se ejecutara primero el PHP, si no hubiese datos y fuese
  * falso se ignoraria el PHP y mostraria el formulario.
  */
-$noData = "No has rellenado el campo ";
+$noData = "你还没有填写这个表域";
 //Sacar el SID mas alto de la BD y sumarle 1
     //Conex con la BD
     include 'conexion.php';
@@ -30,40 +28,43 @@ $noData = "No has rellenado el campo ";
     $stmt->close(); 
     $maxSid=$maxSid+1;
 if ($_POST) {
-    //Revisar campos del formulario
+    //查看表单字段
     $arr_opc = array('msgBox','referenceBox', 'classtypeBox','priorityBox','revBox','SIDBox');
     $arr_req = array(
-		    array('ruleType','Tipo'),
-		    array('protocol','Protocolo'),
-		    array('originIP','IP Origen'),
-		    array('originPort','Puerto Origen'),
-		    array('direction','Dirección'),
-		    array('destinIP',' 	IP Destino'),
-		    array('destinPort','Puerto Destino')
+		    array('ruleType','规则类型'),
+		    array('protocol','协议'),
+		    array('originIP','源IP'),
+		    array('originPort','源端口'),
+		    array('direction','方向'),
+		    array('destinIP','目的IP'),
+		    array('destinPort','目的端口')
 		);
     
     //Revisar que no hay ningun campo obligatorio vacio
+    //检查非空的必填字段
     foreach ($arr_req as $r) {
 	if (empty($_REQUEST[$r[0]])) {
 	    echo "<div class="."\"alert alert-warning  alert-dismissable text-center clear fade in\" id=\"formAlert\""
 			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
-			. "No ha rellenado el campo '".$r[1]."' , revise los datos.<br>"
+			. "你还没有填写这个表域'".$r[1]."' , 查看数据。<br>"
 			. "</div>";
 	};
     };
     //Revisar que si se han marcado los campos opcionales se han rellenado los input
+    //检查是否标记了可选字段，输入已填入
     foreach ($arr_opc as $s) {
 	if ($_REQUEST[$s] == $s) {
 	    $noBox= substr($s,0,-3);
 	    if (empty($_REQUEST[$noBox])) {
 		echo "<div class="."\"alert alert-warning alert-dismissable text-center clear fade in\" id=\"formAlert\""
 			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
-			. "Ha marcado el campo opcional '".$s."' , pero no ha rellenado los datos.<br>"
+			. "您已标记可选字段'".$s."' , 但是还没有填写数据。<br>"
 			. "</div>";
 	    };
 	};
     };
     //Mostrar la regla y las opciones con un echo
+    //使用echo显示规则和选项
     foreach ($arr_req as $ec) {
 	if (!empty($_REQUEST[$ec[0]])) {
 	    $rule=$rule.$_REQUEST[$ec[0]]." ";
@@ -97,15 +98,16 @@ if ($_POST) {
 	if ($stmt = $conexion->prepare($query2)){
 	//    echo "<div>registro preparado.</div>"; 
 	} else {
-	    die('Imposible preparar el registro.'.$stmt->error);
+	//    die('Imposible preparar el registro.'.$stmt->error);
+		die('注册准备是不可能的。'.$stmt->error);
 	}
 	// asociar los parámetros
 	$stmt->bind_param('si',$ruleZ,$_POST['SID']);
 	// ejecutar la query
 	if($stmt->execute()){
-	    echo "<div>Registro guardado.</div>";
+	    echo "<div>保存记录</div>";
 	} else {
-	    die('Imposible guardar el registro:'.$conexion->error);
+	    die('无法保存记录：'.$conexion->error);
 	};
 	//Cerramos la conexión	
 	$stmt->close();
@@ -143,13 +145,13 @@ if ($_POST) {
 	<form action="index.php?action=rules_custom" method='post'>
 	    <table class="table13 table-bordered table-condensed ">
 		<tr>
-		    <td>Tipo</td>		<!-- Añadir que sobre cada campo con un hover te explique brevemente que es -->
-		    <td>Protocolo</td>
-		    <td>IP Origen</td>
-		    <td>Puerto Origen</td>
-		    <td>Dirección</td>
-		    <td>IP Destino</td>
-		    <td>Puerto Destino</td>
+		    <td>规则类型</td>		<!-- Añadir que sobre cada campo con un hover te explique brevemente que es -->
+		    <td>协议</td>
+		    <td>源IP</td>
+		    <td>源端口</td>
+		    <td>方向</td>
+		    <td>目的IP</td>
+		    <td>目的端口</td>
 		</tr>
 		<tr>
 		    <td>
@@ -194,26 +196,26 @@ if ($_POST) {
 		</tr>
 		<tr>
 		    <td><input type="checkbox" name="msgBox" value="msgBox"></td>
-		    <td colspan="6">Añadir mensaje: <input type="text" name="msg" value="">  Recuerda usar comillas (" ").</td>
+		    <td colspan="6">添加 msg: <input type="text" name="msg" value="">记得使用英文引号(" ").</td>
 		</tr>
 		<tr>
 		    <td><input type="checkbox" name="referenceBox" value="referenceBox"></td>
-		    <td colspan="6">Añadir referencia: <input type="text" name="reference" value=""></td>
+		    <td colspan="6">添加 reference: <input type="text" name="reference" value=""></td>
 		</tr>
 		<tr>
 		    <td><input type="checkbox" name="classtypeBox" value="classtypeBox"></td>
-		    <td colspan="6">Añadir classtype: <input type="text" name="classtype" value=""></td>
+		    <td colspan="6">添加 classtype: <input type="text" name="classtype" value=""></td>
 		</tr>
 		<tr>
 		    <td><input type="checkbox" name="priorityBox" value="priorityBox"></td>
-		    <td colspan="6">Añadir prioridad: <input type="text" name="priority" value=""></td>
+		    <td colspan="6">添加 priority: <input type="text" name="priority" value=""></td>
 		</tr>
 		<tr>
 		    <td><input type="checkbox" name="revBox" value="revBox"></td>
-		    <td colspan="6">Añadir nº de rev: <input type="text" name="rev" maxlength="18" value=""></td>
+		    <td colspan="6">添加 rev: <input type="text" name="rev" maxlength="18" value=""></td>
 		</tr>
 	    </table>
-	    <input type="submit" name="save" value="Añadir" />
+	    <input type="submit" name="save" value="添加" />
 	</form>
     </div>
     <br>
@@ -262,7 +264,7 @@ if ($_POST) {
 	<br>
     </div-->
     <div>
-	<h4>Contenido del archivo 'custom.rules' actualmente (<a href="index.php?action=rules_view#custom">Ver tabla</a>)</h4>
+	<h4>当前'custom.rules'文件中的规则内容(<a href="index.php?action=rules_view#custom">查看表格</a>)</h4>
 	<!-- Leer el archivo 'custom.rules' -->
 	<textarea cols="100" rows="25" wrap="hard" readonly="yes">
 	    <?php

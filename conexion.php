@@ -8,7 +8,7 @@
 include 'config.php';
 $conexion = new mysqli($host, $username, $password, $db_name);
 if ($conexion->connect_errno) { // Si se produce algún error finaliza con mensaje de error
-die("Error de Conexión: " . $conexion->connect_error);
+die("连接错误: " . $conexion->connect_error);
 }
 $conexion->set_charset("utf8");
 

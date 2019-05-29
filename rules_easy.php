@@ -9,19 +9,20 @@ objetivo añadir de forma sencilla reglas muy básicas/muy usadas para Snort.
  */
 $noRule="<div class="."\"alert alert-warning alert-dismissable text-center clear fade in\" id=\"formAlert\""
 			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
-			. "No ha seleccionado ninguna regla.<br>"
+			. "您尚未选择任何规则。<br>"
 			. "</div>";
-$noAddr="No ha escrito la direccion de la red o del equipo en la ";
+$noAddr="您还没有写过网络或计算机地址";
 
     if($_POST){
-	//Abrir el archivo y escribir las reglas correspondientes
-	//De momento para ir depurando mostraremos echos de las reglas
+	//打开文件并编写相应的规则
+//在进行调试的那一刻，我们将展示规则的回声
 	if (($_POST['regla1']) || ($_POST['regla2']) || ($_POST['regla3']) || ($_POST['regla4']) || ($_POST['regla5'])) {
 	    
-	    // Conexión a la base de datos haciendo uso de conexion.php
+	    // 使用conexion.php 链接数据库
 	    include 'conexion.php';
 	    
 	    //Sacar el SID mas alto de la BD y sumarle 1/2/3
+	    //从DB中删除最高SID并添加1/2/3
 	    $query = "SELECT max( `sid` )"
 	    .   "FROM `easyRules;";
 
@@ -50,11 +51,11 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		if (empty($_POST['addr1']) || ($_POST['addr1'] == 'IP o Red')) {
 		    echo "<div class="."\"alert alert-warning alert-dismissable text-center clear fade in\" id=\"formAlert\""
 			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
-			. $noAddr."primera regla.<br>"
+			. $noAddr."第一条规则。<br>"
 			. "</div>";
 		}else {
 		    $sid1=$maxSplus1;
-		    $rule1="'alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; sid:".$sid1.';)\'';
+		    $rule1="'alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detect PING\"; classtype:misc-activity; rev:1; sid:".$sid1.';)\'';
 		    $sid1="'".$maxSplus1."'";
 		    //'echo' para depuracion
 		    //echo "alert icmp any any -> ".$_POST['addr1']." any (msg:\"Detectado PING\"; classtype:misc-activity; rev:1; sid:".$maxSplus1.";)<br>";
@@ -71,11 +72,11 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 		if (empty($_POST['addr2']) || ($_POST['addr2'] == 'IP o Red')) {
 		    echo "<div class="."\"alert alert-warning alert-dismissable text-center clear fade in\" id=\"formAlert\""
 			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
-			. $noAddr."segunda regla.<br>"
+			. $noAddr."第二条规则。<br>"
 			. "</div>";
 		}else {
 		    $sid2=$maxSplus2;		    
-		    $rule2="'alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; sid:".$sid2.';)\'';
+		    $rule2="'alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detect SSH\"; classtype:misc-activity; rev:1; sid:".$sid2.';)\'';
 		    $sid2="'".$maxSplus2."'";
 		    //echo "alert tcp any any -> ".$_POST['addr2']." 22 (msg:\"Detectado SSH\"; classtype:misc-activity; rev:1; sid:".$maxSplus2.";)<br>";
 		    //echo "<p>----------------------------------</p>";
@@ -169,9 +170,9 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 
 	    // ejecutar la query
 		if($stmt->execute()){
-		    echo "<div>Registro guardado.</div>";
+		    echo "<div>保存记录。</div>";
 		} else {
-		    die('Imposible guardar el registro:'.$conexion->error);
+		    die('无法保存记录：'.$conexion->error);
 		};
 	    
 	}else{
@@ -199,27 +200,26 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
     };
 ?>
 <div>
-    <h2>Reglas preparadas</h2>
-    <p>Aqui tiene una serie de reglas preparadas para añadir rapidamente
-    a su detector de intrusos.</p>
+    <h2>简易规则</h2>
+    <p>在这里，您可以使用一组规则快速添加到入侵检测器中。</p>
 
     <div>
 	<form action="index.php?action=rules_easy" method='post'>
 	    <!-- XX -->
-	    <input type="checkbox" name="regla1" value="regla1">Detección de ping en <input type="text" name="addr1" value="IP o Red"> <br>
+	    <input type="checkbox" name="regla1" value="regla1">检测 ping<input type="text" name="addr1" value="IP o Red"> <br>
 
 	    <!-- XX -->
-	    <input type="checkbox" name="regla2" value="regla2">Detección de SSH en <input type="text" name="addr2" value="IP o Red"> <br>
+	    <input type="checkbox" name="regla2" value="regla2">检测 SSH<input type="text" name="addr2" value="IP o Red"> <br>
 
 	    <!-- XX -->
-	    <input type="checkbox" name="regla3" value="regla3">Escaneo de puertos con NMAP <input type="text" name="addr3" value="IP o Red"> <br>
+	    <input type="checkbox" name="regla3" value="regla3">使用NMAP扫描端口 <input type="text" name="addr3" value="IP o Red"> <br>
 
 	    <!-- probar esta: alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "P2P .torrent metafile"; content:"HTTP/"; content:".torrent"; flow:established,to_server;classtype:policy-violation;) -->
-	    <input type="checkbox" name="regla4" value="regla4">Detección descarga de archivos .torrent <br>
+	    <input type="checkbox" name="regla4" value="regla4">检测.torrent文件的下载<br>
 
 	    <!-- Probar esta: alert tcp $EXTERNAL_NET any -> $HOME_NET any //(msg: "Cuidado, están descargando MP3";flags: AP; content: ".mp3";) -->
-	    <input type="checkbox" name="regla5" value="regla5">Detección descarga de archivos .mp3 <br>
-	    <input type="submit" name="save" value="Enviar" />
+	    <input type="checkbox" name="regla5" value="regla5">检测.mp3文件的下载<br>
+	    <input type="submit" name="save" value="发送" />
 	</form> 
     </div>
     <br>  
@@ -268,7 +268,7 @@ $noAddr="No ha escrito la direccion de la red o del equipo en la ";
 	<br>
     </div-->
     <div>
-	<h4>Contenido del archivo 'easy.rules' actualmente (<a href="index.php?action=rules_view#easy">Ver tabla</a>)</h4>
+	<h4>当前'easy.rules'文件的规则内容 (<a href="index.php?action=rules_view#easy">查看表格</a>)</h4>
 	<!-- Leer el archivo 'easy.rules' -->
 	<textarea cols="100" rows="25" wrap="hard" readonly="yes">
 	    <?php

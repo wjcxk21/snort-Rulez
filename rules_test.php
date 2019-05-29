@@ -9,7 +9,7 @@ objetivo probar el correcto funcionamiento de Snort.
  */
 $noRule="<div class="."\"alert alert-warning alert-dismissable text-center clear fade in\" id=\"formAlert\""
 			."><button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>"
-			. "No ha seleccionado ninguna regla.<br>"
+			. "您尚未选择任何规则。<br>"
 			. "</div>";
 
 if ($_POST) {
@@ -60,14 +60,14 @@ if ($_POST) {
 	    if ($stmt = $conexion->prepare($query)){
 	    /*    echo "<div>registro preparado.</div>"; */
 	    } else {
-		die('Imposible preparar el registro.'.$conexion->error); 
+		die('无法准备注册.'.$conexion->error); 
 	    };
 	    
 	    // ejecutar la query
 	    if($stmt->execute()){
-		echo "<div>Registro guardado.</div>";
+		echo "<div>保存记录。</div>";
 	    } else {
-		die('Imposible guardar el registro:'.$conexion->error);
+		die('无法保存记录:'.$conexion->error);
 	    };
 	    
 	    //Cerramos la conexión
@@ -99,25 +99,23 @@ if ($_POST) {
 }
 ?>
 <div>
-    <h2>Reglas de prueba</h2>
-    <p>Aqui tiene una serie de reglas preparadas para probar rapidamente
-    que su detector de intrusos fuinciona correctamente.</p>
-    <p>Estas alertas solo sirven a la hora de probar el funcionamiento del
-	IDS, una vez termine de realizar las pruebas deben eliminarse.</p>
+    <h2>测试规则</h2>
+    <p>这是一套准备快速证明您的入侵检测器正常工作的规则。</p>
+    <p>这些警报仅用于测试IDS的操作，一旦完成测试必须删除。</p>
 
     <div>
 	<form action="index.php?action=rules_test" method='post'>
 	    <!-- alert icmp any any -> any any (msg:"Ping al IDS detection";sid:20000013;rev:1;) -->
-	    <input type="checkbox" name="regla1" value="Regla aqui">Detección de ping (desde cualquier origen a qualquier destino) <br>
+	    <input type="checkbox" name="regla1" value="Regla aqui">Ping检测（从任何来源到任何目的地）<br>
 
 	    <!-- alert tcp any any -> any 22:23 (msg:"ssh detection(tcp)";sid:20000015;rev:2;)-->
-	    <input type="checkbox" name="regla2" value="Regla aqui">Detección de SSH o Telnet (desde cualquier origen a qualquier destino)<br>
+	    <input type="checkbox" name="regla2" value="Regla aqui">检测SSH或Telnet（从任何源到任何目的地）<br>
 
 	    <!-- alert tcp any any -> any 80 (msg:\"http detection(tcp)\";sid:20000016;rev:2;) -->
 	    <!-- alert tcp any any -> any 443 (msg:\"https detection(tcp)\";sid:20000017;rev:2;) -->
-	    <input type="checkbox" name="regla3" value="Regla aqui">Detección de cualquier conexión Web (puertos 80 y 443)<br>
+	    <input type="checkbox" name="regla3" value="Regla aqui">检测任何Web连接（端口80和443）<br>
 
-	    <input type="submit" name="save" value="Enviar" />
+	    <input type="submit" name="save" value="发送" />
 	</form> 
     </div>
     <br>
@@ -165,7 +163,7 @@ if ($_POST) {
 	<br>
     </div-->
     <div>
-	<h4>Contenido del archivo 'test.rules' actualmente (<a href="index.php?action=rules_view#test">Ver tabla</a>)</h4>
+	<h4>目前'test.rules'文件的内容(<a href="index.php?action=rules_view#test">查看表格</a>)</h4>
 	<!-- Leer el archivo 'test.rules' -->
 	<textarea cols="100" rows="25" wrap="hard" readonly="yes">
 	    <?php

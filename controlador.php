@@ -3,31 +3,32 @@ include 'conexion.php';
 include_once 'inc/functions.php';
 sec_session_start();
 
-$usuario = filter_input(INPUT_POST, 'usuario', $filter = FILTER_SANITIZE_STRING);
+$username = filter_input(INPUT_POST, 'username', $filter = FILTER_SANITIZE_STRING);
 $password = filter_input(INPUT_POST, 'psha', $filter = FILTER_SANITIZE_STRING); // The hashed password.
 
-if (!login_check($conexion)) { //no estas autorizado
-    if (isset($usuario, $password)) {
-	if (login($usuario, $password, $conexion) == true) {
-	    // Éxito
-	    $action = $default_action; //acción por defecto
+if (!login_check($conexion)) { //未授权
+    if (isset($username, $password)) {
+	if (login($username, $password, $conexion) == true) {
+	    // 成功
+	    $action = $default_action; //默认操作
 	    
-	    echo "<div class=\"logout\"> <a href=\"index.php?action=logout\"> Desconectar
-		{$_SESSION['usuario']} </a></div>";
+	    echo "<div class=\"logout\"> <a href=\"index.php?action=logout\"> 断开
+		{$_SESSION['username']} </a></div>";
 	    
 	} else {
-	    // Login error: no coinciden usuario y password
+	    //登录错误：用户和密码不匹配
 	    $action = "login";
 	    echo "<div class="."\"alert alert-danger alert-dismissable text-center clear\" id=\"login_fail\"".">
 		<button type="."button"." class="."close"." data-dismiss="."alert".">&times;</button>
-		    Login incorrecto! Revisa los datos.
+		    登录不正确！请检查数据。
 		</div>";
 	}
     } else {
 	//significa que aún no has valores para usuario y password
+    	//表示您仍然没有用户名和密码的值
 	$action = "login";
     }
-} else { // si estas autorizado
+} else { // si estas autorizado //如果你被授权
     
     $action = basename(filter_input(INPUT_GET, 'action', $filter = FILTER_SANITIZE_STRING));
     
@@ -38,7 +39,7 @@ if (!login_check($conexion)) { //no estas autorizado
     }
     if ($action != "login"){
 	    echo "<div class=\"logout\"> <a href=\"index.php?action=logout\"> "
-	    . "Desconectar {$_SESSION['usuario']} "
+	    . "断开 {$_SESSION['username']} "
 	    . "</a></div><br>";
     }
     if (!isset($action)) {
@@ -46,7 +47,7 @@ if (!login_check($conexion)) { //no estas autorizado
     }
     if (!file_exists($action . '.php')) { //comprobamos que el fichero exista
 	$action = $default_action; //si no existe mostramos la página por defecto
-	echo "Operación no soportada: 404 [Prueba: Default is ". $default_action ." ] and action= ". $action ."!";
+	echo "操作不支持: 404 [测试: 默认为 ". $default_action ." ] and action= ". $action ."!";
     }
 }
 

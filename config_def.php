@@ -8,8 +8,7 @@ $password = "";
 
 //
 $intentos_login = 5;
-$tiempo_fuerzabruta = 2; //horas
-$secure = false; //por defecto no obligar a https
-
+$tiempo_fuerzabruta = 2; //小时
+$secure = false; //默认情况下不强制https
 //
 $default_action ='instrucciones';

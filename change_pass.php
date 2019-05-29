@@ -1,4 +1,4 @@
-<h2>Cambiar la contraseña</h2>
+<h2>修改口令</h2>
 <?php
 // coger el parámetro que nos permitirá identificar el registro
 $id = $_SESSION['id'];
@@ -20,9 +20,9 @@ if ($_POST) {
     $stmt->bind_param('si', $_POST['password'], $id);
     
     if ($stmt->execute()) {
-    echo "Contraseña actualizada";
+    echo "更新口令";
     } else {
-    echo 'Error al actualizar.';
+    echo '更新时错误.';
     }
 }
 
@@ -37,12 +37,12 @@ border='0'>
 	<tr>
 	    <td></td>
 	    <td>
-		<input type='submit' value='Guardar' />
+		<input type='submit' value='保存' />
 	    </td>
 	</tr>
     </table>
     <br>
-    <a href="./index.php?action=<?php echo $default_action ?>">Volver a Inicio</a>
+    <a href="./index.php?action=<?php echo $default_action ?>">回到主页</a>
 </form>
 
 

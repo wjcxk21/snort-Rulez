@@ -26,8 +26,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `customRules` (
-  `idCustomRule` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la custom_regla',
-  `rule` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Regla completa',
+  `idCustomRule` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID of customRules',
+  `rule` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'context of rule',
   `sid` int(11) NOT NULL COMMENT 'SID',
   PRIMARY KEY (`idCustomRule`),
   UNIQUE KEY `sid` (`sid`)
@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS `customRules` (
 --
 
 CREATE TABLE IF NOT EXISTS `easyRules` (
-  `idEasyRule` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la easy_regla',
-  `rule` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Regla, sin el SID',
+  `idEasyRule` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID of easyRules',
+  `rule` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'rule, without sid',
   `sid` int(11) NOT NULL COMMENT 'SID',
   PRIMARY KEY (`idEasyRule`),
   UNIQUE KEY `sid` (`sid`)
@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
 --
 
 CREATE TABLE IF NOT EXISTS `testRules` (
-  `idTestRule` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la test_regla',
-  `rule` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'Regla entera',
+  `idTestRule` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID of testRules',
+  `rule` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'rule entity',
   PRIMARY KEY (`idTestRule`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=77 ;
 
@@ -77,24 +77,39 @@ CREATE TABLE IF NOT EXISTS `testRules` (
 -- Estructura de tabla para la tabla `users`
 --
 
+-- CREATE TABLE IF NOT EXISTS `users` (
+--   `idUser` int(11) NOT NULL AUTO_INCREMENT,
+--   `nombre` varchar(50) NOT NULL,
+--   `apellido1` varchar(50) NOT NULL,
+--   `apellido2` varchar(50) NOT NULL,
+--   `email` varchar(50) NOT NULL,
+--   `telefono` char(9) NOT NULL,
+--   `usuario` varchar(50) NOT NULL,
+--   `password` char(128) NOT NULL,
+--   PRIMARY KEY (`idUser`),
+--   UNIQUE KEY `usuario` (`usuario`)
+-- ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
 CREATE TABLE IF NOT EXISTS `users` (
   `idUser` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) NOT NULL,
-  `apellido1` varchar(50) NOT NULL,
-  `apellido2` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `fname1` varchar(50) NOT NULL,
+  `fname2` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `telefono` char(9) NOT NULL,
-  `usuario` varchar(50) NOT NULL,
+  `telno` char(9) NOT NULL,
+  `username` varchar(50) NOT NULL,
   `password` char(128) NOT NULL,
   PRIMARY KEY (`idUser`),
-  UNIQUE KEY `usuario` (`usuario`)
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
-
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`idUser`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `usuario`, `password`) VALUES
+-- INSERT INTO `users` (`idUser`, `nombre`, `apellido1`, `apellido2`, `email`, `telefono`, `usuario`, `password`) VALUES
+-- (1, 'Nikola', 'Tesla', '', 'elfutur@es.mio', '963141592', 'ntesla', '9d573f9cc2df610703a9b7a495f40c5d27fbdf56a65f999b180a6da39823a332fd15c3c30bd1c91d226c6432fa837f523062dccac3dcbd59b2babfa5656a3f6d');
+
+INSERT INTO `users` (`idUser`, `name`, `fname1`, `fname2`, `email`, `telno`, `username`, `password`) VALUES
 (1, 'Nikola', 'Tesla', '', 'elfutur@es.mio', '963141592', 'ntesla', '9d573f9cc2df610703a9b7a495f40c5d27fbdf56a65f999b180a6da39823a332fd15c3c30bd1c91d226c6432fa837f523062dccac3dcbd59b2babfa5656a3f6d');
 
 --

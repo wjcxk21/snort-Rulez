@@ -1,15 +1,16 @@
 <?php
 // coger el parámetro que nos permitirá identificar el registro
+//获取将允许我们识别记录的参数
 
-$id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Registro no encontrado.');
-$type = isset($_GET['type']) ? $_GET['type'] : die('ERROR: Registro no encontrado.');
+$id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: 记录未找到.');
+$type = isset($_GET['type']) ? $_GET['type'] : die('ERROR: 记录未找到.');
 
 include 'conexion.php';
 
-//'echo' para depuracion
+//'echo' 用于调试
 //echo "`".$id."` y `".$type."`";
 
-// Preparación de la consulta de borrado
+// 准备删除查询
 switch ($type) {
     case 'testRules':
 	$query = "DELETE FROM testRules WHERE idTestRule = ?";
@@ -25,28 +26,29 @@ switch ($type) {
 	break;
 };
 
-//'echo' para depuracion
+//'echo' 调试
 //echo "<br>".$query;
 
 if ($stmt = $conexion->prepare($query)){
-	//echo "<div>registro preparado.</div>"; 
+	//echo "<div>准备注册.</div>"; 
     } else {
-	die('Imposible preparar el registro.'.$conexion->error); 
+	die('无法准备注册.'.$conexion->error); 
     };
 
 $stmt->bind_param('i', $id);
 
 if ($stmt->execute()) {
     //header('Location: index.php?action=instrucciones&borra=yes');
-    echo "<br>La regla fue borrada<br><br>"
-    . "<a href=\"./index.php?action=instrucciones\">Volver al inicio</a>";
+    echo "<br>该规则已删除<br><br>"
+    . "<a href=\"./index.php?action=instrucciones\">回到主页</a>";
 } else {
-    die('Imposible borrar el registro.');
+    die('无法删除记录');
 }
-//Cerramos la conexión
+//关闭连接
 $stmt->close();
 
 //Actualizar las reglas añadidas a la tabla correspondiente para añadirlas a su .rules
+//更新添加到相应表格的规则，将它们添加到.rules
     $result = $conexion->query($sql);
 
     if ($result->num_rows > 0) {

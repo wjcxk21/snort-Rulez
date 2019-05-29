@@ -10,9 +10,9 @@
 	<script type="text/JavaScript" src="js/forms.js"></script>
 	<script type="text/JavaScript">
             function borra_cliente(id,type){
-        		var answer = confirm('¿Estás seguro que deseas borrar la regla?');
+        		var answer = confirm('您确定要删除该规则吗？');
         		if (answer) {
-			    // si el usuario hace click en ok, se ejecuta borra.php
+			    //如果用户单击“确定”，则执行delete.php borra.php
 			    window.location = 'index.php?action=borra&id=' + id + '&type=' + type;
         		}
             }
@@ -30,16 +30,16 @@
 		    </div>
 		</div>
 		<nav class="melolbar">
-		    <div><a href="index.php?action=instrucciones">Inicio</a></div>
-		    <div><a href="index.php?action=rules_test">Reglas Test</a></div>
-		    <div><a href="index.php?action=rules_easy">Reglas Preparadas</a></div>
-		    <div><a href="index.php?action=rules_custom">Reglas Personalizadas</a></div>
-		    <div><a href="index.php?action=rules_view">Ver tablas de reglas</a></div>
-		    <div><a href="index.php?action=change_pass">Cambiar contraseña</a></div>
+		    <div><a href="index.php?action=instrucciones">帮助说明</a></div>
+		    <div><a href="index.php?action=rules_test">测试规则</a></div>
+		    <div><a href="index.php?action=rules_easy">简易规则</a></div>
+		    <div><a href="index.php?action=rules_custom">自定义规则</a></div>
+		    <div><a href="index.php?action=rules_view">规则列表</a></div>
+		    <div><a href="index.php?action=change_pass">修改口令</a></div>
 		</nav>
 		<div id="content">
 		    <?php
-		    // controlador.php se encargara de mostrar el 'contenido' correspondiente
+		    // controlador.php 显示相应的内容
 			include('controlador.php');
 		    ?>
 		</div>
